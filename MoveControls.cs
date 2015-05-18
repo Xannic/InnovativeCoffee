@@ -73,6 +73,7 @@ namespace InovativeCoffeeGUI
                     }
                     Gebieden[i].Top = y;
                 }
+
             }
         }
 
@@ -80,18 +81,18 @@ namespace InovativeCoffeeGUI
             for (int i = 0; i < GebiedPlaatsen.Length; i++) {
                 GebiedPlaatsen[i] = new Coordinaten();
             }
-            GebiedPlaatsen[0].x = x + 250;
-            GebiedPlaatsen[0].y = y - 175;
-            GebiedPlaatsen[1].x = x - 250;
-            GebiedPlaatsen[1].y = y - 175;
-            GebiedPlaatsen[2].x = x - 300;
-            GebiedPlaatsen[2].y = y;
-            GebiedPlaatsen[3].x = x + 300;
-            GebiedPlaatsen[3].y = y;
-            GebiedPlaatsen[4].x = x - 250;
-            GebiedPlaatsen[4].y = y + 175;
-            GebiedPlaatsen[5].x = x + 250;
-            GebiedPlaatsen[5].y = y + 175;
+            GebiedPlaatsen[0].x = x + 200;
+            GebiedPlaatsen[0].y = y - 200;
+            GebiedPlaatsen[1].x = x - 350;
+            GebiedPlaatsen[1].y = y - 200;
+            GebiedPlaatsen[2].x = x - 400;
+            GebiedPlaatsen[2].y = y - 25;
+            GebiedPlaatsen[3].x = x + 250;
+            GebiedPlaatsen[3].y = y - 25;
+            GebiedPlaatsen[4].x = x - 350;
+            GebiedPlaatsen[4].y = y + 150;
+            GebiedPlaatsen[5].x = x + 200;
+            GebiedPlaatsen[5].y = y + 150;
 
         }
 

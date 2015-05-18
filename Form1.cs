@@ -71,6 +71,7 @@ namespace InovativeCoffeeGUI
                 Gebieden[i].Left = XMiddle;
                 Gebieden[i].Top = YMiddle;
                 Gebieden[i].Visible = false;
+                this.Controls.Add(Gebieden[i]);
             }
         }
 
@@ -102,15 +103,16 @@ namespace InovativeCoffeeGUI
         {
             if (SelectedKoffie != null)
             {
+                pictureBox9.Visible = false;
                 MoveControls move = new MoveControls();
                 move.MovePicturesToMiddle(Pictures, XMiddle, YMiddle);
                 move.MovePicturesToSide(Gebieden, XMiddle, YMiddle);
             }
-            else { 
+            else
+            {
                 //TODO
                 //Pls Select Coffee Message
             }
-            
         }
 
         
