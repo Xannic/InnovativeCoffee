@@ -14,15 +14,64 @@ namespace InovativeCoffeeGUI
     public partial class Form1 : Form
     {
         private List<Koffie> KoffieLijst = new List<Koffie>();
+        private List<Gebied> GebiedenLijst = new List<Gebied>();
+        private PictureBox[] Pictures = new PictureBox[8];
+        private PictureBox[] Gebieden = new PictureBox[6];
+        private PictureBox CenterPicture;
+        private int XMiddle = 683;
+        private int YMiddle = 350;
+        private Koffie SelectedKoffie;
+
         public Form1()
         {
             InitializeComponent();
-            InitClickEvents();
+            
+            InitPictureboxes();
+            VulEnviormentLijst();
             VulKoffieLijst();
-            this.TopMost = true;
+
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
             this.BackColor = Color.FromArgb(36,27,18);
+        }
+
+        private void InitPictureboxes() {
+            //Eerste state van de GUI
+            //Koffie Pictures
+            CenterPicture = pictureBox9;
+            Pictures[0] = pictureBox1;
+            Pictures[1] = pictureBox2;
+            Pictures[2] = pictureBox3;
+            Pictures[3] = pictureBox4;
+            Pictures[4] = pictureBox5;
+            Pictures[5] = pictureBox6;
+            Pictures[6] = pictureBox7;
+            Pictures[7] = pictureBox8;
+
+            //Tweede state van de GUI
+            //Gebieden Pictures
+            for (int i = 0; i < Gebieden.Length; i++) { 
+                Gebieden[i] = new PictureBox();
+                Gebieden[i].Size = new System.Drawing.Size(150, 150);
+                Gebieden[i].BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            }
+        }
+
+        private void VulEnviormentLijst() {
+            GebiedenLijst.Add(new Gebied { Naam = "Bos", Image = ".\\Images\\Koffie\\koffie1.png" });
+            GebiedenLijst.Add(new Gebied { Naam = "Strand", Image = ".\\Images\\Koffie\\koffie1.png" });
+            GebiedenLijst.Add(new Gebied { Naam = "Bos", Image = ".\\Images\\Koffie\\koffie1.png" });
+            GebiedenLijst.Add(new Gebied { Naam = "Strand", Image = ".\\Images\\Koffie\\koffie1.png" });
+            GebiedenLijst.Add(new Gebied { Naam = "Bos", Image = ".\\Images\\Koffie\\koffie1.png" });
+            GebiedenLijst.Add(new Gebied { Naam = "Strand", Image = ".\\Images\\Koffie\\koffie1.png" });
+            //set images
+            for (int i = 0; i < GebiedenLijst.Count;i++ )
+            {
+                Gebieden[i].BackgroundImage = Image.FromFile(GebiedenLijst[i].Image);
+                Gebieden[i].Left = XMiddle;
+                Gebieden[i].Top = YMiddle;
+                Gebieden[i].Visible = false;
+            }
         }
 
         private void VulKoffieLijst()
@@ -36,37 +85,34 @@ namespace InovativeCoffeeGUI
             KoffieLijst.Add(new Koffie { Naam = "Warme Chocomelk", Image = ".\\Images\\Koffie\\koffie1.png" });
             KoffieLijst.Add(new Koffie { Naam = "Thee", Image = ".\\Images\\Koffie\\koffie1.png" });
             //set images
-            pictureBox1.BackgroundImage = Image.FromFile(KoffieLijst[0].Image);
-            pictureBox2.BackgroundImage = Image.FromFile(KoffieLijst[1].Image);
-            pictureBox3.BackgroundImage = Image.FromFile(KoffieLijst[2].Image);
-            pictureBox4.BackgroundImage = Image.FromFile(KoffieLijst[3].Image);
-            pictureBox5.BackgroundImage = Image.FromFile(KoffieLijst[4].Image);
-            pictureBox6.BackgroundImage = Image.FromFile(KoffieLijst[5].Image);
-            pictureBox7.BackgroundImage = Image.FromFile(KoffieLijst[6].Image);
-            pictureBox8.BackgroundImage = Image.FromFile(KoffieLijst[7].Image);
-        }
-
-        private void InitClickEvents()
-        {
-            pictureBox1.Click += KoffieKeus;
-            pictureBox2.Click += KoffieKeus;
-            pictureBox3.Click += KoffieKeus;
-            pictureBox4.Click += KoffieKeus;
-            pictureBox5.Click += KoffieKeus;
-            pictureBox6.Click += KoffieKeus;
-            pictureBox7.Click += KoffieKeus;
-            pictureBox8.Click += KoffieKeus;
+            for (int i = 0; i < Pictures.Length; i++) {
+                Pictures[i].BackgroundImage = Image.FromFile(KoffieLijst[i].Image);
+                Pictures[i].Name = KoffieLijst[i].Naam;
+            }
         }
 
         private void KoffieKeus(object sender, EventArgs e)
         {
-            String naam = ((PictureBox)sender).Name;
-            
+            PictureBox TempPicture = (PictureBox)sender;
+            CenterPicture.BackgroundImage = TempPicture.BackgroundImage;
+            SelectedKoffie = KoffieLijst.Find(x => x.Naam.Contains(TempPicture.Name));
         }
 
         private void OkeKnopKlik(object sender, EventArgs e)
         {
-
+            if (SelectedKoffie != null)
+            {
+                MoveControls move = new MoveControls();
+                move.MovePicturesToMiddle(Pictures, XMiddle, YMiddle);
+                move.MovePicturesToSide(Gebieden, XMiddle, YMiddle);
+            }
+            else { 
+                //TODO
+                //Pls Select Coffee Message
+            }
+            
         }
+
+        
     }
 }

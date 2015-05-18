@@ -77,6 +77,7 @@
             this.pictureBox3.Size = new System.Drawing.Size(150, 150);
             this.pictureBox3.TabIndex = 2;
             this.pictureBox3.TabStop = false;
+            this.pictureBox3.Click += new System.EventHandler(this.KoffieKeus);
             // 
             // pictureBox4
             // 
@@ -86,6 +87,7 @@
             this.pictureBox4.Size = new System.Drawing.Size(150, 150);
             this.pictureBox4.TabIndex = 3;
             this.pictureBox4.TabStop = false;
+            this.pictureBox4.Click += new System.EventHandler(this.KoffieKeus);
             // 
             // pictureBox5
             // 
@@ -95,6 +97,7 @@
             this.pictureBox5.Size = new System.Drawing.Size(150, 150);
             this.pictureBox5.TabIndex = 4;
             this.pictureBox5.TabStop = false;
+            this.pictureBox5.Click += new System.EventHandler(this.KoffieKeus);
             // 
             // pictureBox6
             // 
@@ -104,6 +107,7 @@
             this.pictureBox6.Size = new System.Drawing.Size(150, 150);
             this.pictureBox6.TabIndex = 5;
             this.pictureBox6.TabStop = false;
+            this.pictureBox6.Click += new System.EventHandler(this.KoffieKeus);
             // 
             // pictureBox7
             // 
@@ -113,6 +117,7 @@
             this.pictureBox7.Size = new System.Drawing.Size(150, 150);
             this.pictureBox7.TabIndex = 6;
             this.pictureBox7.TabStop = false;
+            this.pictureBox7.Click += new System.EventHandler(this.KoffieKeus);
             // 
             // pictureBox8
             // 
@@ -122,6 +127,7 @@
             this.pictureBox8.Size = new System.Drawing.Size(150, 150);
             this.pictureBox8.TabIndex = 7;
             this.pictureBox8.TabStop = false;
+            this.pictureBox8.Click += new System.EventHandler(this.KoffieKeus);
             // 
             // pictureBox9
             // 

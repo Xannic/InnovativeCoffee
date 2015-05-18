@@ -5,13 +5,10 @@ using System.Text;
 
 namespace InovativeCoffeeGUI
 {
-    class Koffie
+    class Gebied
     {
-
         public String Naam { get; set; }
-        public int Suiker { get; set; }
-        public int Melk { get; set; }
-        public int Sterkte { get; set; }
+        public int Seconden { get; set; }
         public String Image { get; set; }
     }
 }
