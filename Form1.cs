@@ -21,6 +21,7 @@ namespace InovativeCoffeeGUI
         private int XMiddle = 683;
         private int YMiddle = 350;
         private Koffie SelectedKoffie;
+        private bool OkClikced = false;
 
         public Form1()
         {
@@ -101,20 +102,26 @@ namespace InovativeCoffeeGUI
 
         private void OkeKnopKlik(object sender, EventArgs e)
         {
-            if (SelectedKoffie != null)
+            if (!OkClikced)
             {
-                pictureBox9.Visible = false;
-                MoveControls move = new MoveControls();
-                move.MovePicturesToMiddle(Pictures, XMiddle, YMiddle);
-                move.MovePicturesToSide(Gebieden, XMiddle, YMiddle);
+                if (SelectedKoffie != null)
+                {
+                    MoveControls move = new MoveControls();
+                    move.MovePicturesToMiddle(Pictures, XMiddle, YMiddle);
+                    move.MovePicturesToSide(Gebieden, XMiddle, YMiddle);
+                }
+                else
+                {
+                    //TODO
+                    //Pls Select Coffee Message
+                }
             }
-            else
-            {
-                //TODO
-                //Pls Select Coffee Message
+            else { 
+                //Post to server
+                HttpController http = new HttpController();
+                http.PostKoffie();
+                }
             }
-        }
-
-        
+        }    
     }
 }

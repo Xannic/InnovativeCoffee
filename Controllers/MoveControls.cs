@@ -59,25 +59,26 @@ namespace InovativeCoffeeGUI
                     {
                         x++;
                     }
+                    while (y != GebiedPlaatsen[i].y)
+                    {
+                        if (y > GebiedPlaatsen[i].y)
+                        {
+                            y--;
+                        }
+                        else
+                        {
+                            y++;
+                        }
+                        Gebieden[i].Top = y;
+                    }
                     Gebieden[i].Left = x;
                 }
-                while (y != GebiedPlaatsen[i].y)
-                {
-                    if (y > GebiedPlaatsen[i].y)
-                    {
-                        y--;
-                    }
-                    else
-                    {
-                        y++;
-                    }
-                    Gebieden[i].Top = y;
-                }
+                
 
             }
         }
 
-        private void SetCoords(int x, int y) {
+        public void SetCoords(int x, int y) {
             for (int i = 0; i < GebiedPlaatsen.Length; i++) {
                 GebiedPlaatsen[i] = new Coordinaten();
             }
@@ -93,7 +94,6 @@ namespace InovativeCoffeeGUI
             GebiedPlaatsen[4].y = y + 150;
             GebiedPlaatsen[5].x = x + 200;
             GebiedPlaatsen[5].y = y + 150;
-
         }
 
     }
