@@ -45,7 +45,7 @@ namespace InovativeCoffeeGUI
 
         public void MovePicturesToSide(PictureBox[] Gebieden, int XStart, int YStart) {
             SetCoords(XStart,YStart);
-            for (int i = 0; i < Gebieden.Length; i++ )
+            for (int i = 0; i < OrderForm.TotalLandscapes; i++ )
             {
                 Gebieden[i].Visible = true;
                 int x = Gebieden[i].Left;

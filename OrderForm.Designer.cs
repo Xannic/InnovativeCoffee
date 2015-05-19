@@ -1,6 +1,6 @@
 ﻿namespace InovativeCoffeeGUI
 {
-    partial class Form1
+    partial class OrderForm
     {
         /// <summary>
         /// Required designer variable.
