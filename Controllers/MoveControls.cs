@@ -43,6 +43,83 @@ namespace InovativeCoffeeGUI
             }
         }
 
+        public void MoveBitchGetOutTheWay(PictureBox[] Pictures, int XMiddle, int YMiddle)
+        {
+            for (int i = 0; i < Pictures.Length; i++)
+            {
+                int x = Pictures[i].Left;
+                int y = Pictures[i].Top;
+                bool toRight;
+                bool toBottom;
+
+                while (!(x == XMiddle && y == YMiddle))
+                {
+                    toRight = (x < XMiddle);
+                    toBottom = (y < YMiddle);
+                    int tempX;
+                    int tempY;
+                    
+                    if (toRight)
+                    {
+                        tempX = Convert.ToInt32(x + (XMiddle / x));
+                    }
+                    else
+                    {
+                        tempX = Convert.ToInt32(x - (x / XMiddle));
+                    }
+
+                    if (toBottom)
+                    {
+                        tempY = Convert.ToInt32(y + (YMiddle / y));
+                    }
+                    else
+                    {
+                        tempY = Convert.ToInt32(y - (y / YMiddle));
+                    }
+
+                    x = tempX;
+                    if (Pictures[i].Left != XMiddle)
+                    {
+                        Pictures[i].Left = x;
+                    }
+                    else
+                    {
+                        x = XMiddle;
+                    }
+                    y = tempY;
+                    if (Pictures[i].Top != YMiddle)
+                    {
+                        Pictures[i].Top = y;
+                    }
+                    else
+                    {
+                        y = YMiddle;
+                    }
+
+                    if (i == 0)
+                    {
+                        Console.WriteLine("x="+x+"----y="+y);
+                        Console.WriteLine(!(x == XMiddle && y == YMiddle));
+                    }
+
+                    /*if (x >= y)
+                    {
+                        // x eerst
+                        x = tempX;
+                        Pictures[i].Left = x;
+                    }
+                    else
+                    {
+                        // y eerst
+                        y = tempY;
+                        Pictures[i].Top = y;
+                    }*/
+                }
+
+                
+            }
+        }
+
         public void MovePicturesToSide(PictureBox[] Gebieden, int XStart, int YStart) {
             SetCoords(XStart,YStart);
             for (int i = 0; i < OrderForm.TotalLandscapes; i++ )
