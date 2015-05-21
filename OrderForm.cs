@@ -72,7 +72,6 @@ namespace InovativeCoffeeGUI
                 pictures[i].Left = XMiddle;
                 pictures[i].Top = YMiddle;
                 pictures[i].Visible = false;
-                this.Controls.Add(pictures[i]);
             }
         }
 
@@ -108,18 +107,29 @@ namespace InovativeCoffeeGUI
 
         private void OkeKnopKlik(object sender, EventArgs e)
         {
-            if (SelectedKoffie != null)
-            {
-                MoveControls move = new MoveControls();
-                move.MovePicturesToMiddle(pictures, XMiddle, YMiddle);
-                VulEnviormentLijst();
-                move.MovePicturesToSide(pictures, XMiddle, YMiddle);
-            }
-            else
-            {
-                //TODO
-                //Pls Select Coffee Message
-            }
+            
+                if (SelectedKoffie != null)
+                {
+                    if (SelectedGebied != null)
+                    {
+                        HttpController http = new HttpController();
+                        http.PostKoffie(SelectedGebied.Naam, SelectedKoffie.Naam, 30);
+                    }
+                    else
+                    {
+                        MoveControls move = new MoveControls();
+                        move.MovePicturesToMiddle(pictures, XMiddle, YMiddle);
+                        VulEnviormentLijst();
+                        move.MovePicturesToSide(pictures, XMiddle, YMiddle);
+                        ButtonOk.Visible = true;
+                    }
+                }
+                else
+                {
+                    //TODO
+                    //Pls Select Coffee Message
+                }
+            
         }
 
         

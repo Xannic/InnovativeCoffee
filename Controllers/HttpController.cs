@@ -16,11 +16,11 @@ namespace InovativeCoffeeGUI
         {
             using (var wb = new WebClient())
             {
-                String url = Domain + "api/postkoffie";
+                String url = Domain + "api/coffee/insertcoffee.php";
                 var data = new NameValueCollection();
-                data["gebied"]= Gebied;
-                data["koffie"] = KoffieNaam;
-                data["tijd_seconden"] = tijd.ToString();
+                data["landscape"]= Gebied;
+                data["coffee"] = KoffieNaam;
+                data["time_seconds"] = tijd.ToString();
                 var response = wb.UploadValues(url, "POST", data);
             }
         }

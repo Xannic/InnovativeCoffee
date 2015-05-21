@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace InovativeCoffeeGUI
 {
-    public partial class Form1 : Form
+    public partial class OrderForm : Form
     {
         private List<Koffie> KoffieLijst = new List<Koffie>();
         private List<Gebied> GebiedenLijst = new List<Gebied>();
