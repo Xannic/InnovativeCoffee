@@ -123,7 +123,8 @@ namespace InovativeCoffeeGUI
                 if (SelectedKoffie != null)
                 {
                     MoveControls move = new MoveControls();
-                    move.MovePicturesToMiddle(pictures, XMiddle, YMiddle);
+                    //move.MovePicturesToMiddle(pictures, XMiddle, YMiddle);
+                    move.MoveBitchGetOutTheWay(pictures, XMiddle, YMiddle);
                     VulEnviormentLijst();
                     move.MovePicturesToSide(pictures, XMiddle, YMiddle);
                     LandscapeChoice = true;
