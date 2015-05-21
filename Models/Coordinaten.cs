@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InovativeCoffeeGUI
 {
-    class Coordinaten
+    class Coordinates
     {
         public int x { get; set; }
         public int y { get; set; }

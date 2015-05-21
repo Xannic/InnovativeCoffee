@@ -108,6 +108,11 @@
     </Content>
     <None Include="Resources\300x3001.png" />
     <None Include="Resources\150x1501.png" />
+    <Content Include="Images\Options\Melk.png" />
+    <Content Include="Images\Options\OptionFilled.png" />
+    <Content Include="Images\Options\OptionNotFilled.png" />
+    <Content Include="Images\Options\Sterkte.png" />
+    <Content Include="Images\Options\Suiker.png" />
     <Content Include="Images\ParisNights.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
