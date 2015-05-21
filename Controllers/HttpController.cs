@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace InovativeCoffeeGUI
 {
@@ -16,12 +17,14 @@ namespace InovativeCoffeeGUI
         {
             using (var wb = new WebClient())
             {
-                String url = Domain + "api/coffee/insertcoffee.php";
+                String url = Domain + "coffee/insertcoffee.php";
                 var data = new NameValueCollection();
                 data["landscape"]= Gebied;
                 data["coffee"] = KoffieNaam;
                 data["time_seconds"] = tijd.ToString();
+                data["automaat_id"] = ConfigurationSettings.AppSettings.Get("deviceId");
                 var response = wb.UploadValues(url, "POST", data);
+                Console.WriteLine(response.ToString());
             }
         }
     }
