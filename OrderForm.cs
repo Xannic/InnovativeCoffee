@@ -16,7 +16,8 @@ namespace InovativeCoffeeGUI
         public static int TotalCoffees = 8;
         public static int TotalLandscapes = 6;
 
-        private Gebied SelectedGebied;
+        private Gebied SelectedLandscape;
+        private bool LandscapeChoice = false;
         private Koffie SelectedKoffie;
         
         private List<Koffie> KoffieLijst = new List<Koffie>();
@@ -32,7 +33,6 @@ namespace InovativeCoffeeGUI
             InitializeComponent();
             
             InitPictureboxes();
-            //VulEnviormentLijst();
             VulKoffieLijst();
 
             this.FormBorderStyle = FormBorderStyle.None;
@@ -69,10 +69,12 @@ namespace InovativeCoffeeGUI
             for (int i = 0; i < GebiedenLijst.Count; i++)
             {
                 pictures[i].BackgroundImage = Image.FromFile(GebiedenLijst[i].Image);
+                pictures[i].Name = GebiedenLijst[i].Naam;
                 pictures[i].Left = XMiddle;
                 pictures[i].Top = YMiddle;
                 pictures[i].Visible = false;
-                this.Controls.Add(pictures[i]);
+                pictures[i].Click -= KoffieKeus;
+                pictures[i].Click += LandscapeChoiceClick;
             }
         }
 
@@ -96,6 +98,7 @@ namespace InovativeCoffeeGUI
             {
                 pictures[i].BackgroundImage = Image.FromFile(KoffieLijst[i].Image);
                 pictures[i].Name = KoffieLijst[i].Naam;
+                pictures[i].BackColor = Color.Transparent;
             }
         }
 
@@ -106,20 +109,43 @@ namespace InovativeCoffeeGUI
             SelectedKoffie = KoffieLijst.Find(x => x.Naam.Contains(TempPicture.Name));
         }
 
+        private void LandscapeChoiceClick(object sender, EventArgs e)
+        {
+            PictureBox TempPicture = (PictureBox)sender;
+            BackgroundImage = TempPicture.BackgroundImage;
+            SelectedLandscape = GebiedenLijst.Find(x => x.Naam.Contains(TempPicture.Name));
+        }
+
         private void OkeKnopKlik(object sender, EventArgs e)
         {
-            if (SelectedKoffie != null)
+            if (!LandscapeChoice)
             {
-                MoveControls move = new MoveControls();
-                move.MovePicturesToMiddle(pictures, XMiddle, YMiddle);
-                VulEnviormentLijst();
-                move.MovePicturesToSide(pictures, XMiddle, YMiddle);
+                if (SelectedKoffie != null)
+                {
+                    MoveControls move = new MoveControls();
+                    move.MovePicturesToMiddle(pictures, XMiddle, YMiddle);
+                    VulEnviormentLijst();
+                    move.MovePicturesToSide(pictures, XMiddle, YMiddle);
+                    LandscapeChoice = true;
+                }
+                else
+                {
+                    //TODO
+                    //Pls Select Coffee Message
+                }
             }
             else
             {
-                //TODO
-                //Pls Select Coffee Message
+                if (SelectedLandscape != null)
+                {
+                    HttpController http = new HttpController();
+                    http.PostKoffie(SelectedLandscape.Naam, SelectedKoffie.Naam, 30);
+                    MoveControls move = new MoveControls();
+                    move.MovePicturesToMiddle(pictures, XMiddle, YMiddle);
+                }
             }
+            
+            
         }
 
         
