@@ -22,9 +22,8 @@ namespace InovativeCoffeeGUI
                 data["landscape"]= Gebied;
                 data["coffee"] = KoffieNaam;
                 data["time_seconds"] = tijd.ToString();
-                data["automaat_id"] = ConfigurationSettings.AppSettings.Get("deviceId");
+                data["deviceId"] = ConfigurationManager.AppSettings["deviceId"];
                 var response = wb.UploadValues(url, "POST", data);
-                Console.WriteLine(response.ToString());
             }
         }
     }
