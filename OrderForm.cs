@@ -44,6 +44,7 @@ namespace InovativeCoffeeGUI
             //Eerste state van de GUI
             //Koffie Pictures
             CenterPicture = this.pictureBox9;
+            CenterPicture.BackColor = Color.Transparent;
 
             pictures[0] = pictureBox1;
             pictures[1] = pictureBox2;
@@ -126,7 +127,8 @@ namespace InovativeCoffeeGUI
                     //move.MovePicturesToMiddle(pictures, XMiddle, YMiddle);
                     move.MoveBitchGetOutTheWay(pictures, XMiddle, YMiddle);
                     VulEnviormentLijst();
-                    move.MovePicturesToSide(pictures, XMiddle, YMiddle);
+                    //move.MovePicturesToSide(pictures, XMiddle, YMiddle);
+                    move.MoveBitchGetInTheWay(pictures, XMiddle, YMiddle);
                     LandscapeChoice = true;
                 }
                 else
