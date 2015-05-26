@@ -23,10 +23,18 @@ namespace InovativeCoffeeGUI
         private List<Koffie> KoffieLijst = new List<Koffie>();
         private List<Gebied> GebiedenLijst = new List<Gebied>();
         private PictureBox[] pictures = new PictureBox[8];
+        PictureBox[] SterkteOptions = new PictureBox[5];
+        PictureBox[] MelkOptions = new PictureBox[5];
+        PictureBox[] SuikerOptions = new PictureBox[5];
 
         private PictureBox CenterPicture;
+        private PictureBox SuikerPicture;
+        private PictureBox SterktePicture;
+        private PictureBox MelkPicture;
+
         private int XMiddle = 683;
         private int YMiddle = 350;
+        private int Sterkte = 0, Melk = 0, Suiker = 0;
 
         public OrderForm()
         {
@@ -54,8 +62,52 @@ namespace InovativeCoffeeGUI
             pictures[5] = pictureBox6;
             pictures[6] = pictureBox7;
             pictures[7] = pictureBox8;
+
+            SuikerPicture = pictureBox11;
+            SuikerPicture.BackColor = Color.Transparent;
+            SuikerPicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\Suiker.png");
             
+
+            SterktePicture = pictureBox10;
+            SterktePicture.BackColor = Color.Transparent;
+            SterktePicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\Sterkte.png");
+
+            MelkPicture = pictureBox12;
+            MelkPicture.BackColor = Color.Transparent;
+            MelkPicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\Melk.png");
             
+            SterkteOptions = SetOptionsImages(SterkteOptions, 483, Sterkte);
+            SuikerOptions = SetOptionsImages(SuikerOptions, 758, Suiker);
+            MelkOptions = SetOptionsImages(MelkOptions, 621, Melk);
+            for (int i = 0; i < SterkteOptions.Length; i++ )
+            {
+                SterkteOptions[i].Click += SetStrenghtValue;
+                SuikerOptions[i].Click += SetSugarValue;
+                MelkOptions[i].Click += SetMilkValue;
+            }
+        }
+
+        private PictureBox[] SetOptionsImages(PictureBox[] pics, int LocX,int StartValue) {
+            int LocY = 670;
+            for (int i = 0; i < pics.Length; i++) {
+                PictureBox p = new PictureBox();
+                p.Visible = true;
+                p.Size = new Size(125,20);
+                p.Left = LocX;
+                p.Top = LocY;
+                p.BackColor = Color.Transparent;
+                p.Name = i.ToString();
+                if (i == (StartValue))
+                {
+                    p.BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionFilled.png");
+                }else{
+                    p.BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionNotFilled.png");
+                }
+                pics[i] = p;
+                LocY -= 25;
+                Controls.Add(pics[i]);
+            }
+            return pics;
         }
 
         private void VulEnviormentLijst() {
@@ -101,6 +153,31 @@ namespace InovativeCoffeeGUI
                 pictures[i].Name = KoffieLijst[i].Naam;
                 pictures[i].BackColor = Color.Transparent;
             }
+        }
+
+        private void SetStrenghtValue(object sender, EventArgs e)
+        {
+            PictureBox TempPicture = (PictureBox)sender;
+            SterkteOptions[Sterkte].BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionNotFilled.png");
+            String NewValue = TempPicture.Name;
+            TempPicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionFilled.png");
+            Sterkte = Convert.ToInt32(NewValue);
+        }
+        private void SetMilkValue(object sender, EventArgs e)
+        {
+            PictureBox TempPicture = (PictureBox)sender;
+            MelkOptions[Melk].BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionNotFilled.png");
+            String NewValue = TempPicture.Name;
+            TempPicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionFilled.png");
+            Melk = Convert.ToInt32(NewValue);
+        }
+        private void SetSugarValue(object sender, EventArgs e)
+        {
+            PictureBox TempPicture = (PictureBox)sender;
+            SuikerOptions[Suiker].BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionNotFilled.png");
+            String NewValue = TempPicture.Name;
+            TempPicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionFilled.png");
+            Suiker = Convert.ToInt32(NewValue);
         }
 
         private void KoffieKeus(object sender, EventArgs e)

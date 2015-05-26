@@ -1,12 +1,3 @@
-C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\bin\Debug\InovativeCoffeeGUI.exe.config
-C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\bin\Debug\InovativeCoffeeGUI.exe
-C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\bin\Debug\InovativeCoffeeGUI.pdb
-C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\obj\Debug\InovativeCoffeeGUI.Properties.Resources.resources
-C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\obj\Debug\InovativeCoffeeGUI.csproj.GenerateResource.Cache
-C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\obj\Debug\InovativeCoffeeGUI.exe
-C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\obj\Debug\InovativeCoffeeGUI.pdb
-C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\bin\Debug\Images\Koffie\koffie1.png
-C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\obj\Debug\InovativeCoffeeGUI.csprojResolveAssemblyReference.cache
 C:\Users\Nabil\Documents\InnovativeCoffee\obj\Debug\InovativeCoffeeGUI.OrderForm.resources
 C:\Users\Nabil\Documents\InnovativeCoffee\obj\Debug\InovativeCoffeeGUI.Properties.Resources.resources
 C:\Users\Nabil\Documents\InnovativeCoffee\obj\Debug\InovativeCoffeeGUI.csproj.GenerateResource.Cache
@@ -29,4 +20,12 @@ C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\Inovati
 C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\bin\Debug\Images\Koffie\Espresso.png
 C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\bin\Debug\Images\Hitachi.png
 C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\bin\Debug\Images\ParisNights.png
+C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\bin\Debug\Images\Koffie\koffie1.png
+C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\bin\Debug\InovativeCoffeeGUI.exe.config
+C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\bin\Debug\InovativeCoffeeGUI.exe
+C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\bin\Debug\InovativeCoffeeGUI.pdb
 C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\obj\Debug\InovativeCoffeeGUI.OrderForm.resources
+C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\obj\Debug\InovativeCoffeeGUI.Properties.Resources.resources
+C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\obj\Debug\InovativeCoffeeGUI.csproj.GenerateResource.Cache
+C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\obj\Debug\InovativeCoffeeGUI.exe
+C:\Users\Xander\documents\visual studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\obj\Debug\InovativeCoffeeGUI.pdb
