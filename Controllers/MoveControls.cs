@@ -190,18 +190,68 @@ namespace InovativeCoffeeGUI
         }
 
         private static void Swap<T>(ref T lhs, ref T rhs) { T temp; temp = lhs; lhs = rhs; rhs = temp; }
-        public static void Line(int x0, int y0, int x1, int y1)
+        public static void Line(int Bx, int By, int Ex, int Ey)
         {
-            bool steep = Math.Abs(y1 - y0) > Math.Abs(x1 - x0);
-            if (steep) { Swap<int>(ref x0, ref y0); Swap<int>(ref x1, ref y1); }
-            if (x0 > x1) { Swap<int>(ref x0, ref x1); Swap<int>(ref y0, ref y1); }
-            int dX = (x1 - x0), dY = Math.Abs(y1 - y0), err = (dX / 2), ystep = (y0 < y1 ? 1 : -1), y = y0;
+            bool steep = Math.Abs(Ey - By) > Math.Abs(Ex - Bx);
+            if (steep) { Swap<int>(ref Bx, ref By); Swap<int>(ref Ex, ref Ey); }
+            if (Bx > Ex) { Swap<int>(ref Bx, ref Ex); Swap<int>(ref By, ref Ey); }
+            int dX = (Ex - Bx), dY = Math.Abs(Ey - By), err = (dX / 2), ystep = (By < Ey ? 1 : -1), y = By;
 
-            for (int x = x0; x <= x1; ++x)
+            for (int x = Bx; x <= Ex; ++x)
             {
                 //if (!(steep ? plot(y, x) : plot(x, y))) return;
                 err = err - dY;
                 if (err < 0) { y += ystep; err += dX; }
+            }
+        }
+
+        public void JustPlaceIt(PictureBox[] Pictures, int XStart, int YStart)
+        {
+            SetCoordinates(XStart, YStart);
+            for (int i = 0; i < OrderForm.TotalLandscapes; i++)
+            {
+                Pictures[i].Left = GebiedPlaatsen[i].x;
+                Pictures[i].Top = GebiedPlaatsen[i].y;
+                Pictures[i].Visible = true;
+                Console.WriteLine("placed"+i);
+            }
+        }
+
+        public void MoveBitchGetInTheWayOne(PictureBox[] Pictures, int XStart, int YStart)
+        {
+            Console.WriteLine("Starting move in the way");
+            SetCoordinates(XStart, YStart);
+            for (int i = 0; i < OrderForm.TotalLandscapes; i++)
+            {
+                Pictures[i].Visible = true;
+                int Bx = XStart;
+                int By = YStart;
+                int Ex = GebiedPlaatsen[i].x;
+                int Ey = GebiedPlaatsen[i].y;
+                bool steep = Math.Abs(Ey - By) > Math.Abs(Ex - Bx);
+                if (steep) { Swap<int>(ref Bx, ref By); Swap<int>(ref Ex, ref Ey); }
+                if (Bx > Ex) { Swap<int>(ref Bx, ref Ex); Swap<int>(ref By, ref Ey); }
+                int dX = (Ex - Bx), dY = Math.Abs(Ey - By), err = (dX / 2), ystep = (By < Ey ? 1 : -1), y = By;
+                
+                for (int x = Bx; x <= Ex; ++x)
+                {
+                    //if (!(steep ? plot(y, x) : plot(x, y))) return;
+                    if (steep)
+                    {
+                        Pictures[i].Left = y;
+                        Pictures[i].Top = x;
+                    }
+                    else
+                    {
+                        Pictures[i].Left = x;
+                        Pictures[i].Top = y;
+                        //return;
+                    }
+
+                    err = err - dY;
+                    if (err < 0) { y += ystep; err += dX; }
+                }
+                Console.WriteLine("Image " + i + " moved from x=" + Ex + "y=" + Ey + "TOx=" + Pictures[i].Left + "y=" + Pictures[i].Top);
             }
         }
     }
