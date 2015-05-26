@@ -194,6 +194,26 @@ namespace InovativeCoffeeGUI
             SelectedLandscape = GebiedenLijst.Find(x => x.Naam.Contains(TempPicture.Name));
         }
 
+        private void ToggleOptionsVisibility()
+        {
+            SterktePicture.Visible = !SterktePicture.Visible;
+            foreach(PictureBox picture in SterkteOptions){
+                picture.Visible = !picture.Visible;
+            }
+
+            MelkPicture.Visible = !MelkPicture.Visible;
+            foreach (PictureBox picture in MelkOptions)
+            {
+                picture.Visible = !picture.Visible;
+            }
+            
+            SuikerPicture.Visible = !SuikerPicture.Visible;
+            foreach (PictureBox picture in SuikerOptions)
+            {
+                picture.Visible = !picture.Visible;
+            }
+        }
+
         private void OkeKnopKlik(object sender, EventArgs e)
         {
             if (!LandscapeChoice)
@@ -205,7 +225,9 @@ namespace InovativeCoffeeGUI
                     move.MoveBitchGetOutTheWay(pictures, XMiddle, YMiddle);
                     VulEnviormentLijst();
                     //move.MovePicturesToSide(pictures, XMiddle, YMiddle);
-                    move.MoveBitchGetInTheWay(pictures, XMiddle, YMiddle);
+                    ToggleOptionsVisibility();
+                    move.JustPlaceIt(pictures, XMiddle, YMiddle);
+                    
                     LandscapeChoice = true;
                 }
                 else
