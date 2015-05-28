@@ -138,7 +138,7 @@ namespace InovativeCoffeeGUI
             KoffieLijst.Add(new Koffie { Naam = "Espresso", Image = ".\\Images\\Koffie\\Espresso.png" });
             KoffieLijst.Add(new Koffie { Naam = "Variatie Koffie", Image = ".\\Images\\Koffie\\koffie1.png" });
             KoffieLijst.Add(new Koffie { Naam = "Doubble Espresso", Image = ".\\Images\\Koffie\\koffie1.png" });
-            KoffieLijst.Add(new Koffie { Naam = "Café Creme", Image = ".\\Images\\Koffie\\koffie1.png" });
+            KoffieLijst.Add(new Koffie { Naam = "Cafe Creme", Image = ".\\Images\\Koffie\\koffie1.png" });
             KoffieLijst.Add(new Koffie { Naam = "Warme Chocomelk", Image = ".\\Images\\Koffie\\Chocolade.png" });
             KoffieLijst.Add(new Koffie { Naam = "Thee", Image = ".\\Images\\Koffie\\koffie1.png" });
             //set images
