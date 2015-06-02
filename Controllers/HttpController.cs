@@ -6,6 +6,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using CoffeeAnalytics.Models;
+using Newtonsoft.Json;
 
 namespace InovativeCoffeeGUI
 {
@@ -24,6 +26,19 @@ namespace InovativeCoffeeGUI
                 data["time_seconds"] = tijd.ToString();
                 data["deviceId"] = ConfigurationManager.AppSettings["deviceId"];
                 var response = wb.UploadValues(url, "POST", data);
+            }
+        }
+
+        public bool CanWePlay() {
+            String JsonResponse = new WebClient().DownloadString(Domain + "coffee/getlatestcoffee.php");
+            Order Koffie = JsonConvert.DeserializeObject<Order>(JsonResponse);
+            if (Koffie.Played == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

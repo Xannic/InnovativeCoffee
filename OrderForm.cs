@@ -162,6 +162,7 @@ namespace InovativeCoffeeGUI
             String NewValue = TempPicture.Name;
             TempPicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionFilled.png");
             Sterkte = Convert.ToInt32(NewValue);
+            LabelStrenght.Text = "Strenght : " + (Sterkte+1);
         }
         private void SetMilkValue(object sender, EventArgs e)
         {
@@ -170,6 +171,7 @@ namespace InovativeCoffeeGUI
             String NewValue = TempPicture.Name;
             TempPicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionFilled.png");
             Melk = Convert.ToInt32(NewValue);
+            LabelMilk.Text = "Milk : " + Melk;
         }
         private void SetSugarValue(object sender, EventArgs e)
         {
@@ -178,6 +180,7 @@ namespace InovativeCoffeeGUI
             String NewValue = TempPicture.Name;
             TempPicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionFilled.png");
             Suiker = Convert.ToInt32(NewValue);
+            LabelSugar.Text = "Sugar : " + Suiker;
         }
 
         private void KoffieKeus(object sender, EventArgs e)
@@ -241,9 +244,16 @@ namespace InovativeCoffeeGUI
                 if (SelectedLandscape != null)
                 {
                     HttpController http = new HttpController();
-                    http.PostKoffie(SelectedLandscape.Naam, SelectedKoffie.Naam, 30);
-                    MoveControls move = new MoveControls();
-                    move.MovePicturesToMiddle(pictures, XMiddle, YMiddle);
+                    //checked of het rdy is om te gaan anders gaat die naar een wachtscherm
+                    if (http.CanWePlay())
+                    {
+                        http.PostKoffie(SelectedLandscape.Naam, SelectedKoffie.Naam, 30);
+                        MoveControls move = new MoveControls();
+                        move.MovePicturesToMiddle(pictures, XMiddle, YMiddle);
+                    }
+                    else { 
+                        //set wachtscherm op
+                    }
                 }
             }
             

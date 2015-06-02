@@ -41,6 +41,9 @@
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.pictureBox12 = new System.Windows.Forms.PictureBox();
+            this.LabelSugar = new System.Windows.Forms.Label();
+            this.LabelMilk = new System.Windows.Forms.Label();
+            this.LabelStrenght = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -181,6 +184,39 @@
             this.pictureBox12.TabIndex = 12;
             this.pictureBox12.TabStop = false;
             // 
+            // LabelSugar
+            // 
+            this.LabelSugar.AutoSize = true;
+            this.LabelSugar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelSugar.ForeColor = System.Drawing.Color.White;
+            this.LabelSugar.Location = new System.Drawing.Point(533, 200);
+            this.LabelSugar.Name = "LabelSugar";
+            this.LabelSugar.Size = new System.Drawing.Size(59, 13);
+            this.LabelSugar.TabIndex = 14;
+            this.LabelSugar.Text = "Sugar : 0";
+            // 
+            // LabelMilk
+            // 
+            this.LabelMilk.AutoSize = true;
+            this.LabelMilk.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelMilk.ForeColor = System.Drawing.Color.White;
+            this.LabelMilk.Location = new System.Drawing.Point(533, 217);
+            this.LabelMilk.Name = "LabelMilk";
+            this.LabelMilk.Size = new System.Drawing.Size(49, 13);
+            this.LabelMilk.TabIndex = 15;
+            this.LabelMilk.Text = "Milk : 0";
+            // 
+            // LabelStrenght
+            // 
+            this.LabelStrenght.AutoSize = true;
+            this.LabelStrenght.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelStrenght.ForeColor = System.Drawing.Color.White;
+            this.LabelStrenght.Location = new System.Drawing.Point(533, 234);
+            this.LabelStrenght.Name = "LabelStrenght";
+            this.LabelStrenght.Size = new System.Drawing.Size(74, 13);
+            this.LabelStrenght.TabIndex = 16;
+            this.LabelStrenght.Text = "Strenght : 1";
+            // 
             // OrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -188,6 +224,9 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.LabelStrenght);
+            this.Controls.Add(this.LabelMilk);
+            this.Controls.Add(this.LabelSugar);
             this.Controls.Add(this.pictureBox12);
             this.Controls.Add(this.pictureBox11);
             this.Controls.Add(this.pictureBox10);
@@ -216,6 +255,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -234,6 +274,9 @@
         private System.Windows.Forms.PictureBox pictureBox10;
         private System.Windows.Forms.PictureBox pictureBox11;
         private System.Windows.Forms.PictureBox pictureBox12;
+        private System.Windows.Forms.Label LabelSugar;
+        private System.Windows.Forms.Label LabelMilk;
+        private System.Windows.Forms.Label LabelStrenght;
     }
 }
 
