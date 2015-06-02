@@ -66,6 +66,7 @@ namespace InovativeCoffeeGUI
                     if (Pictures[i].Left != XMiddle)
                     {
                         Pictures[i].Left = tempX;
+                        Pictures[i].Refresh();
                     }
                     else
                     {
@@ -75,6 +76,7 @@ namespace InovativeCoffeeGUI
                     if (Pictures[i].Top != YMiddle)
                     {
                         Pictures[i].Top = tempY;
+                        Pictures[i].Refresh();
                     }
                     else
                     {
@@ -223,6 +225,7 @@ namespace InovativeCoffeeGUI
             SetCoordinates(XStart, YStart);
             for (int i = 0; i < OrderForm.TotalLandscapes; i++)
             {
+
                 Pictures[i].Visible = true;
                 int Bx = XStart;
                 int By = YStart;
@@ -245,12 +248,14 @@ namespace InovativeCoffeeGUI
                     {
                         Pictures[i].Left = x;
                         Pictures[i].Top = y;
+                        
                         //return;
                     }
-
+                    Pictures[i].Refresh();
                     err = err - dY;
                     if (err < 0) { y += ystep; err += dX; }
                 }
+                
                 Console.WriteLine("Image " + i + " moved from x=" + Ex + "y=" + Ey + "TOx=" + Pictures[i].Left + "y=" + Pictures[i].Top);
             }
         }
