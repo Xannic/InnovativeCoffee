@@ -140,7 +140,7 @@ namespace InovativeCoffeeGUI
             KoffieLijst.Add(new Koffie { Naam = "Doubble Espresso", Image = ".\\Images\\Koffie\\koffie1.png" });
             KoffieLijst.Add(new Koffie { Naam = "Cafe Creme", Image = ".\\Images\\Koffie\\koffie1.png" });
             KoffieLijst.Add(new Koffie { Naam = "Warme Chocomelk", Image = ".\\Images\\Koffie\\Chocolade.png" });
-            KoffieLijst.Add(new Koffie { Naam = "Thee", Image = ".\\Images\\Koffie\\koffie1.png" });
+            KoffieLijst.Add(new Koffie { Naam = "Thee", Image = ".\\Images\\Koffie\\Thee.png" });
             //set images
             //for (int i = 0; i < Koffies.Length; i++) {
               //  Koffies[i].BackgroundImage = Image.FromFile(KoffieLijst[i].Image);
@@ -229,7 +229,8 @@ namespace InovativeCoffeeGUI
                     VulEnviormentLijst();
                     //move.MovePicturesToSide(pictures, XMiddle, YMiddle);
                     ToggleOptionsVisibility();
-                    move.JustPlaceIt(pictures, XMiddle, YMiddle);
+                    //move.JustPlaceIt(pictures, XMiddle, YMiddle);
+                    move.MoveBitchGetInTheWayOne(pictures, XMiddle, YMiddle);
                     
                     LandscapeChoice = true;
                 }
@@ -254,6 +255,11 @@ namespace InovativeCoffeeGUI
                     else { 
                         //set wachtscherm op
                     }
+=======
+                    http.PostKoffie(SelectedLandscape.Naam, SelectedKoffie.Naam, 30);
+                    //MoveControls move = new MoveControls();
+                    //move.MovePicturesToMiddle(pictures, XMiddle, YMiddle);
+>>>>>>> 00f806b53b914e5c388bd7d90c3ff699e1d2757e
                 }
             }
             
