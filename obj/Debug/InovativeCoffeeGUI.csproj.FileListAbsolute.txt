@@ -20,3 +20,6 @@ C:\Users\Nabil\Documents\InnovativeCoffee\obj\Debug\InovativeCoffeeGUI.csproj.Ge
 C:\Users\Nabil\Documents\InnovativeCoffee\obj\Debug\InovativeCoffeeGUI.exe
 C:\Users\Nabil\Documents\InnovativeCoffee\obj\Debug\InovativeCoffeeGUI.pdb
 C:\Users\Nabil\Documents\InnovativeCoffee\bin\Debug\Images\Koffie\Thee.png
+C:\Users\Xander\Documents\Visual Studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\bin\Debug\InovativeCoffeeGUI.exe.config
+C:\Users\Xander\Documents\Visual Studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\obj\Debug\InovativeCoffeeGUI.exe
+C:\Users\Xander\Documents\Visual Studio 2013\Projects\InovativeCoffeeGUI\InovativeCoffeeGUI\obj\Debug\InovativeCoffeeGUI.pdb

@@ -255,11 +255,6 @@ namespace InovativeCoffeeGUI
                     else { 
                         //set wachtscherm op
                     }
-=======
-                    http.PostKoffie(SelectedLandscape.Naam, SelectedKoffie.Naam, 30);
-                    //MoveControls move = new MoveControls();
-                    //move.MovePicturesToMiddle(pictures, XMiddle, YMiddle);
->>>>>>> 00f806b53b914e5c388bd7d90c3ff699e1d2757e
                 }
             }
             
