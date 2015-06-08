@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -133,6 +134,7 @@ namespace InovativeCoffeeGUI
                         y = GebiedPlaatsen[i].y;
                     }
 
+                    Pictures[i].Refresh();
                 }
 
             }
@@ -257,6 +259,36 @@ namespace InovativeCoffeeGUI
                 }
                 
                 Console.WriteLine("Image " + i + " moved from x=" + Ex + "y=" + Ey + "TOx=" + Pictures[i].Left + "y=" + Pictures[i].Top);
+            }
+        }
+
+        public void HidePictures(PictureBox[] Pictures, int XEnd, int YEnd)
+        {
+            for (int i = 0; i < Pictures.Length; i++)
+            {
+                while (Pictures[i].Height > 0)
+                {
+                    Pictures[i].Height -= 5;
+                    Pictures[i].Width -= 5;
+                    Pictures[i].Refresh();
+                }
+            }
+
+        }
+
+        public void UnhidePictures(PictureBox[] Pictures, int XStart, int YStart)
+        {
+            SetCoordinates(XStart, YStart);
+            for (int i = 0; i < GebiedPlaatsen.Length; i++)
+            {                
+                    while (Pictures[i].Height < 150)
+                    {
+                        Pictures[i].Height += 5;
+                        Pictures[i].Width += 5;
+                        Pictures[i].Left = GebiedPlaatsen[i].x;
+                        Pictures[i].Top = GebiedPlaatsen[i].y;
+                        Pictures[i].Refresh();
+                    }                
             }
         }
     }

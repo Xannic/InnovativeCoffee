@@ -5,7 +5,7 @@ using System.Text;
 
 namespace InovativeCoffeeGUI
 {
-    class Koffie
+    class Coffee
     {
 
         public String Naam { get; set; }

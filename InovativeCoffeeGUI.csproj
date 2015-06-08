@@ -111,6 +111,9 @@
     </Content>
     <None Include="Resources\300x3001.png" />
     <None Include="Resources\150x1501.png" />
+    <Content Include="Images\Koffie\Thee.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Options\Melk.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
