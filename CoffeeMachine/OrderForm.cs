@@ -16,12 +16,12 @@ namespace InovativeCoffeeGUI
         public static int TotalCoffees = 8;
         public static int TotalLandscapes = 6;
 
-        private Gebied SelectedLandscape;
+        private Landscape SelectedLandscape;
         private bool LandscapeChoice = false;
         private Coffee SelectedCoffee;
 
         private List<Coffee> CoffeeList = new List<Coffee>();
-        private List<Gebied> GebiedenLijst = new List<Gebied>();
+        private List<Landscape> GebiedenLijst = new List<Landscape>();
         private PictureBox[] Pictures = new PictureBox[8];
         PictureBox[] StrengthOptions = new PictureBox[5];
         PictureBox[] MilkOptions = new PictureBox[5];
@@ -42,7 +42,7 @@ namespace InovativeCoffeeGUI
 
             InitPictureboxes();
             InitOptions();
-            VulCoffeeLijst();
+            FillCoffeeList();
 
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
@@ -126,18 +126,18 @@ namespace InovativeCoffeeGUI
             Array.Clear(Pictures, 0, Pictures.Length);
             InitPictureboxes();
 
-            GebiedenLijst.Add(new Gebied { Naam = "Alps", Image = ".\\Images\\Landscapes\\Alps.png" });
-            GebiedenLijst.Add(new Gebied { Naam = "BamboForest", Image = ".\\Images\\Landscapes\\BamboForest.png" });
-            GebiedenLijst.Add(new Gebied { Naam = "Hitachi", Image = ".\\Images\\Landscapes\\Hitachi.png" });
-            GebiedenLijst.Add(new Gebied { Naam = "ParisNights", Image = ".\\Images\\Landscapes\\ParisNights.png" });
-            GebiedenLijst.Add(new Gebied { Naam = "Bos", Image = ".\\Images\\Coffee\\Coffee1.png" });
-            GebiedenLijst.Add(new Gebied { Naam = "Strand", Image = ".\\Images\\Coffee\\Coffee1.png" });
+            GebiedenLijst.Add(new Landscape { Name = "Alps", Image = ".\\Images\\Landscapes\\Alps.png" });
+            GebiedenLijst.Add(new Landscape { Name = "BamboForest", Image = ".\\Images\\Landscapes\\BamboForest.png" });
+            GebiedenLijst.Add(new Landscape { Name = "Hitachi", Image = ".\\Images\\Landscapes\\Hitachi.png" });
+            GebiedenLijst.Add(new Landscape { Name = "ParisNights", Image = ".\\Images\\Landscapes\\ParisNights.png" });
+            GebiedenLijst.Add(new Landscape { Name = "Bos", Image = ".\\Images\\Coffee\\Coffee1.png" });
+            GebiedenLijst.Add(new Landscape { Name = "Strand", Image = ".\\Images\\Coffee\\Coffee1.png" });
 
             //set images
             for (int i = 0; i < GebiedenLijst.Count; i++)
             {
                 Pictures[i].BackgroundImage = Image.FromFile(GebiedenLijst[i].Image);
-                Pictures[i].Name = GebiedenLijst[i].Naam;
+                Pictures[i].Name = GebiedenLijst[i].Name;
                 Pictures[i].Left = XMiddle;
                 Pictures[i].Top = YMiddle;
                 Pictures[i].Click -= CoffeeChoice;
@@ -145,21 +145,21 @@ namespace InovativeCoffeeGUI
             }
         }
 
-        private void VulCoffeeLijst()
+        private void FillCoffeeList()
         {
-            CoffeeList.Add(new Coffee { Naam = "Cappucinno", Image = ".\\Images\\Coffee\\Coffee1.png" });
-            CoffeeList.Add(new Coffee { Naam = "Ristretto", Image = ".\\Images\\Coffee\\Coffee1.png" });
-            CoffeeList.Add(new Coffee { Naam = "Espresso", Image = ".\\Images\\Coffee\\Espresso.png" });
-            CoffeeList.Add(new Coffee { Naam = "Variatie Coffee", Image = ".\\Images\\Coffee\\Coffee1.png" });
-            CoffeeList.Add(new Coffee { Naam = "Doubble Espresso", Image = ".\\Images\\Coffee\\Coffee1.png" });
-            CoffeeList.Add(new Coffee { Naam = "Cafe Creme", Image = ".\\Images\\Coffee\\Coffee1.png" });
-            CoffeeList.Add(new Coffee { Naam = "Warme Chocomelk", Image = ".\\Images\\Coffee\\Chocolade.png" });
-            CoffeeList.Add(new Coffee { Naam = "Thee", Image = ".\\Images\\Coffee\\Thee.png" });
+            CoffeeList.Add(new Coffee { Name = "Cappucinno", Image = ".\\Images\\Coffee\\Coffee1.png" });
+            CoffeeList.Add(new Coffee { Name = "Ristretto", Image = ".\\Images\\Coffee\\Coffee1.png" });
+            CoffeeList.Add(new Coffee { Name = "Espresso", Image = ".\\Images\\Coffee\\Espresso.png" });
+            CoffeeList.Add(new Coffee { Name = "Variatie Coffee", Image = ".\\Images\\Coffee\\Coffee1.png" });
+            CoffeeList.Add(new Coffee { Name = "Doubble Espresso", Image = ".\\Images\\Coffee\\Coffee1.png" });
+            CoffeeList.Add(new Coffee { Name = "Cafe Creme", Image = ".\\Images\\Coffee\\Coffee1.png" });
+            CoffeeList.Add(new Coffee { Name = "Warme Chocomelk", Image = ".\\Images\\Coffee\\Chocolade.png" });
+            CoffeeList.Add(new Coffee { Name = "Thee", Image = ".\\Images\\Coffee\\Thee.png" });
             
             for (int i = 0; i < Pictures.Length; i++)
             {
                 Pictures[i].BackgroundImage = Image.FromFile(CoffeeList[i].Image);
-                Pictures[i].Name = CoffeeList[i].Naam;
+                Pictures[i].Name = CoffeeList[i].Name;
                 Pictures[i].BackColor = Color.Transparent;
             }
         }
@@ -190,14 +190,14 @@ namespace InovativeCoffeeGUI
         {
             PictureBox TempPicture = (PictureBox)sender;
             CenterPicture.BackgroundImage = TempPicture.BackgroundImage;
-            SelectedCoffee = CoffeeList.Find(x => x.Naam.Contains(TempPicture.Name));
+            SelectedCoffee = CoffeeList.Find(x => x.Name.Contains(TempPicture.Name));
         }
 
         private void LandscapeChoiceClick(object sender, EventArgs e)
         {
             PictureBox TempPicture = (PictureBox)sender;
             BackgroundImage = TempPicture.BackgroundImage;
-            SelectedLandscape = GebiedenLijst.Find(x => x.Naam.Contains(TempPicture.Name));
+            SelectedLandscape = GebiedenLijst.Find(x => x.Name.Contains(TempPicture.Name));
         }
 
         private void ToggleOptionsVisibility()
@@ -246,7 +246,7 @@ namespace InovativeCoffeeGUI
                 if (SelectedLandscape != null)
                 {
                     HttpController http = new HttpController();
-                    http.PostCoffee(SelectedLandscape.Naam, SelectedCoffee.Naam, 30);
+                    http.PostCoffee(SelectedLandscape.Name, SelectedCoffee.Name, 30);
                     //MoveControls move = new MoveControls();
                     //move.MovePicturesToMiddle(pictures, XMiddle, YMiddle);
                 }

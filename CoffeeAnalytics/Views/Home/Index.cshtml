@@ -1,0 +1,55 @@
+﻿@using CoffeeAnalytics.Models
+@model Orders
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">Coffee Analytics</p>
+</div>
+
+<div class="row">
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+    google.load("visualization", "1", { packages: ["corechart"] });
+    google.setOnLoadCallback(drawChart);
+
+
+    for(i = 0; i < @Model.CoffeeChartInfo.Count; i++){
+
+        var text = '@Model.CoffeeChartInfo[0].CoffeeName';
+        var count = @Model.CoffeeChartInfo[0].Number;
+
+        console.log(text + ", " + count);
+    }
+
+        function drawChart() {
+            var count = @Model.CoffeeChartInfo.Count;
+            var data = google.visualization.arrayToDataTable([
+                ['Coffee', 'Number Ordered'],
+            ['@Model.CoffeeChartInfo[0].CoffeeName', @Model.CoffeeChartInfo[0].Number],
+            ['@Model.CoffeeChartInfo[1].CoffeeName', @Model.CoffeeChartInfo[1].Number],
+            ['@Model.CoffeeChartInfo[2].CoffeeName', @Model.CoffeeChartInfo[2].Number],
+            ['@Model.CoffeeChartInfo[3].CoffeeName', @Model.CoffeeChartInfo[3].Number],
+            ['@Model.CoffeeChartInfo[4].CoffeeName', @Model.CoffeeChartInfo[4].Number],
+            ['@Model.CoffeeChartInfo[5].CoffeeName', @Model.CoffeeChartInfo[5].Number],
+            ['@Model.CoffeeChartInfo[6].CoffeeName', @Model.CoffeeChartInfo[6].Number],
+            ['@Model.CoffeeChartInfo[7].CoffeeName', @Model.CoffeeChartInfo[7].Number],
+        ]);
+
+        var options = {
+            title: 'Ordered Drinks',
+            is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+    }
+</script>
+    <div id="piechart_3d" style="width: 900px; height: 500px;"></div>
+
+    @for (int i = 0; i < Model.CoffeeChartInfo.Count; i++ ) {
+        <p>@Model.CoffeeChartInfo[i].CoffeeName , aantal keer besteld : @Model.CoffeeChartInfo[i].Number </p>
+    }
+</div>

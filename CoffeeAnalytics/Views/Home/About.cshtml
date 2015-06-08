@@ -1,0 +1,40 @@
+﻿@model string
+@{
+    ViewBag.Title = "About";
+}
+
+<h2>About</h2>
+
+@Model
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", { packages: ["corechart"] });
+    google.setOnLoadCallback(drawChart);
+
+    var str = '@Model';
+    //replacing &quot because for some reason js thinks its funny to put that instead of : "
+    //so we need to do this so that js can keep his funny pants on
+    var jsonObj = $.parseJSON(str.replace(/&quot;/g, '"'));
+    for (i in jsonObj) {
+        console.log(jsonObj[i]["Coffee"]);
+    }
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable();
+        data.addColumn('string', 'Column Name');
+        data.addColumn('number', 'Column Value'); 
+        for (var i = 0; i < jsonObj.length; i++) {
+            data.addRow([jsonObj[i]["Name"], jsonObj[i]["Value"]]);
+        } 
+        var options = {
+            title: 'Ordered Drinks',
+            is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+    }
+</script>
+
+<div id="piechart_3d" style="width: 900px; height: 500px;"></div>

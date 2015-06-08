@@ -50,15 +50,9 @@
   <ItemGroup>
     <Compile Include="Controllers\HttpController.cs" />
     <Compile Include="Controllers\MoveControls.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Coordinaten.cs" />
-    <Compile Include="Models\Gebied.cs" />
-    <Compile Include="Models\Koffie.cs" />
+    <Compile Include="Models\Landscape.cs" />
+    <Compile Include="Models\Coffee.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="OrderForm.cs">
       <SubType>Form</SubType>
