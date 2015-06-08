@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="KoffieDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="KoffieNaam" Type="nvarchar" MaxLength="50" />
+          <Property Name="Landschap" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tijd" Type="datetime" StoreGeneratedPattern="Computed" />
+          <Property Name="Sterkte" Type="int" />
+          <Property Name="Suiker" Type="int" />
+          <Property Name="Melk" Type="int" />
+          <Property Name="DeviceID" Type="int" />
+        </EntityType>
+        <EntityContainer Name="KoffieDBModelStoreContainer">
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KoffieDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="KoffieDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Order" EntityType="KoffieDBModel.Order" />
+        </EntityContainer>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="KoffieNaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Landschap" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tijd" Type="DateTime" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+          <Property Name="Sterkte" Type="Int32" />
+          <Property Name="Suiker" Type="Int32" />
+          <Property Name="Melk" Type="Int32" />
+          <Property Name="DeviceID" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KoffieDBModelStoreContainer" CdmEntityContainer="KoffieDBEntities">
+        <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="KoffieDBModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="Melk" ColumnName="Melk" />
+                <ScalarProperty Name="Suiker" ColumnName="Suiker" />
+                <ScalarProperty Name="Sterkte" ColumnName="Sterkte" />
+                <ScalarProperty Name="Tijd" ColumnName="Tijd" />
+                <ScalarProperty Name="Landschap" ColumnName="Landschap" />
+                <ScalarProperty Name="KoffieNaam" ColumnName="KoffieNaam" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
