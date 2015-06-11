@@ -191,13 +191,17 @@ namespace InovativeCoffeeGUI
             PictureBox TempPicture = (PictureBox)sender;
             CenterPicture.BackgroundImage = TempPicture.BackgroundImage;
             SelectedCoffee = CoffeeList.Find(x => x.Name.Contains(TempPicture.Name));
+
+            ButtonOk.Visible = true;
         }
 
         private void LandscapeChoiceClick(object sender, EventArgs e)
         {
             PictureBox TempPicture = (PictureBox)sender;
-            BackgroundImage = TempPicture.BackgroundImage;
+            //BackgroundImage = TempPicture.BackgroundImage;
             SelectedLandscape = GebiedenLijst.Find(x => x.Name.Contains(TempPicture.Name));
+
+            ButtonOk.Visible = true;
         }
 
         private void ToggleOptionsVisibility()
@@ -221,36 +225,86 @@ namespace InovativeCoffeeGUI
             }
         }
 
-        private void OkeButtonClicked(object sender, EventArgs e)
+        private void ResetScreen()
         {
-            if (!LandscapeChoice)
+            InitializeComponent();
+
+            InitPictureboxes();
+            InitOptions();
+            FillCoffeeList();
+            BerichtLbl.Visible = false;
+
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.WindowState = FormWindowState.Maximized;
+            this.BackColor = Color.FromArgb(36, 27, 18);
+
+            SelectedCoffee = null;
+            SelectedLandscape = null;
+            this.Refresh();
+        }
+
+        private async void OkeButtonClicked(object sender, EventArgs e)
+        {
+            MoveControls move = new MoveControls();
+
+            if (SelectedLandscape == null)
             {
+                
                 if (SelectedCoffee != null)
                 {
-                    MoveControls move = new MoveControls();
+                    
                     move.HidePictures(Pictures, XMiddle, YMiddle);
                     ToggleOptionsVisibility();
                     FillLandscapes();
                     move.UnhidePictures(Pictures, XMiddle, YMiddle);
-                    
-                    LandscapeChoice = true;
-                }
-                else
-                {
-                    //TODO
-                    //Pls Select Coffee Message
+
+                    ButtonOk.Visible = false;
                 }
             }
             else
             {
-                if (SelectedLandscape != null)
+                Console.WriteLine("verzend bericht naar server");
+                move.HidePictures(Pictures, XMiddle, YMiddle);
+                
+                
+                HttpController htc = new HttpController();
+                bool canPlay = htc.CanWePlay();
+
+                if (canPlay)
                 {
-                    HttpController http = new HttpController();
-                    http.PostCoffee(SelectedLandscape.Name, SelectedCoffee.Name, 30);
-                    //MoveControls move = new MoveControls();
-                    //move.MovePicturesToMiddle(pictures, XMiddle, YMiddle);
+                    BerichtLbl.Text = "Uw " + SelectedCoffee.Name + " wordt gezet u kunt naar de belevingskamer lopen.";
+                    BerichtLbl.Visible = true;
+                    Console.WriteLine("coffee sended");
+                    htc.PostCoffee(SelectedLandscape.Name, SelectedCoffee.Name, 30);
                 }
-            }
+                else
+                {
+                    BerichtLbl.Text = "De belevingskamer is in gebruik een moment geduld aub..";
+                    BerichtLbl.Visible = true;
+                    bool sended = false;
+                    this.Refresh();
+                    
+                    while (!sended)
+                    {
+                        System.Threading.Thread.Sleep(2500);
+
+                        if (htc.CanWePlay())
+                        {
+                            BerichtLbl.Text = "Uw " + SelectedCoffee.Name + " wordt gezet u kunt naar de belevingskamer lopen.";
+                            this.Refresh();
+                            Console.WriteLine("coffee sended");
+                            sended = true;
+                            htc.PostCoffee(SelectedLandscape.Name, SelectedCoffee.Name, 30);
+                        }
+                    }
+                }
+
+                System.Threading.Thread.Sleep(3000);
+
+                BerichtLbl.Visible = false;
+                ResetScreen();
+                
+                }            
         }
     }
 }

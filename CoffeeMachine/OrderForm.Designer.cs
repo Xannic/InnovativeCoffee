@@ -45,6 +45,7 @@
             this.LabelMilk = new System.Windows.Forms.Label();
             this.LabelStrenght = new System.Windows.Forms.Label();
             this.BackBtn = new System.Windows.Forms.Button();
+            this.BerichtLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -226,6 +227,19 @@
             this.BackBtn.TabIndex = 17;
             this.BackBtn.Text = "Terug";
             this.BackBtn.UseVisualStyleBackColor = true;
+            this.BackBtn.Visible = false;
+            // 
+            // BerichtLbl
+            // 
+            this.BerichtLbl.AutoSize = true;
+            this.BerichtLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BerichtLbl.ForeColor = System.Drawing.Color.White;
+            this.BerichtLbl.Location = new System.Drawing.Point(194, 160);
+            this.BerichtLbl.Name = "BerichtLbl";
+            this.BerichtLbl.Size = new System.Drawing.Size(253, 37);
+            this.BerichtLbl.TabIndex = 18;
+            this.BerichtLbl.Text = "InnovativeCoffee";
+            this.BerichtLbl.Visible = false;
             // 
             // OrderForm
             // 
@@ -234,6 +248,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.BerichtLbl);
             this.Controls.Add(this.BackBtn);
             this.Controls.Add(this.LabelStrenght);
             this.Controls.Add(this.LabelMilk);
@@ -289,6 +304,7 @@
         private System.Windows.Forms.Label LabelMilk;
         private System.Windows.Forms.Label LabelStrenght;
         private System.Windows.Forms.Button BackBtn;
+        private System.Windows.Forms.Label BerichtLbl;
     }
 }
 

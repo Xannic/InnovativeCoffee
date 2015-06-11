@@ -29,17 +29,12 @@ namespace InovativeCoffeeGUI
             }
         }
 
-        public bool CanWePlay() {
+        public  bool CanWePlay() {
             String JsonResponse = new WebClient().DownloadString(Domain + "coffee/getlatestcoffee.php");
             Order Koffie = JsonConvert.DeserializeObject<Order>(JsonResponse);
-            if (Koffie.Played == 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            //mysql bool = 0 of 1
+            return (Koffie.Played == 1);
+           
         }
     }
 }

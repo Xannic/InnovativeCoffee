@@ -18,28 +18,25 @@ namespace KoffieAPI.Controllers
 
         public string Get()
         {
-           KoffieDBEntities db = new KoffieDBEntities();
-           List<Order> orders = db.Order.OrderByDescending(x => x.Id).ToList();
+            InnovativeCoffeeEntities db = new InnovativeCoffeeEntities();
+            List<Order> orders = db.Orders.OrderByDescending(x => x.Id).ToList();
            
             String json = JsonConvert.SerializeObject(orders) ;
 
             return json;
 
         }
-
-
-       
-
-
+        
         // POST api/values
-      [HttpPost]
+        [HttpPost]
         public void Post([FromBody]String KoffieNaam, String Landschap, String Tijd, String Sterkte, String Melk, String Suiker, String DeviceID, String id  )
         {
             //geef de laatst toegevoegde record terug als json
-            KoffieDBEntities db = new KoffieDBEntities();
+            InnovativeCoffeeEntities1 db = new InnovativeCoffeeEntities1();
+            
             Order order = new Order();
             order.Id = Convert.ToInt32(id);
-            order.KoffieNaam = KoffieNaam;
+            order. = Drink.id;
             order.Landschap = Landschap;
             order.Melk = Convert.ToInt32(Melk);
             order.Sterkte = Convert.ToInt32(Sterkte);
