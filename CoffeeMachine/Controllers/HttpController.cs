@@ -29,10 +29,11 @@ namespace InovativeCoffeeGUI
             }
         }
 
-        public  bool CanWePlay() {
+        public bool CanWePlay() {
+            // Get the latest coffee order and check if we played the scene.
             String JsonResponse = new WebClient().DownloadString(Domain + "coffee/getlatestcoffee.php");
             Order Koffie = JsonConvert.DeserializeObject<Order>(JsonResponse);
-            //mysql bool = 0 of 1
+            //mysql bool = 0 if false or 1 if true
             return (Koffie.Played == 1);
            
         }

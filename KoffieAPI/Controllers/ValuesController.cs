@@ -32,7 +32,7 @@ namespace KoffieAPI.Controllers
         public void Post([FromBody]String KoffieNaam, String Landschap, String Tijd, String Sterkte, String Melk, String Suiker, String DeviceID, String id  )
         {
             //geef de laatst toegevoegde record terug als json
-            InnovativeCoffeeEntities1 db = new InnovativeCoffeeEntities1();
+            InnovativeCoffeeEntities db = new InnovativeCoffeeEntities();
             
             Order order = new Order();
             order.Id = Convert.ToInt32(id);

@@ -13,15 +13,11 @@ namespace InovativeCoffeeGUI
 {
     public partial class OrderForm : Form
     {
-        public static int TotalCoffees = 8;
-        public static int TotalLandscapes = 6;
-
         private Landscape SelectedLandscape;
-        private bool LandscapeChoice = false;
         private Coffee SelectedCoffee;
 
         private List<Coffee> CoffeeList = new List<Coffee>();
-        private List<Landscape> GebiedenLijst = new List<Landscape>();
+        private List<Landscape> LandscapeList = new List<Landscape>();
         private PictureBox[] Pictures = new PictureBox[8];
         PictureBox[] StrengthOptions = new PictureBox[5];
         PictureBox[] MilkOptions = new PictureBox[5];
@@ -126,18 +122,18 @@ namespace InovativeCoffeeGUI
             Array.Clear(Pictures, 0, Pictures.Length);
             InitPictureboxes();
 
-            GebiedenLijst.Add(new Landscape { Name = "Alps", Image = ".\\Images\\Landscapes\\Alps.png" });
-            GebiedenLijst.Add(new Landscape { Name = "BamboForest", Image = ".\\Images\\Landscapes\\BamboForest.png" });
-            GebiedenLijst.Add(new Landscape { Name = "Hitachi", Image = ".\\Images\\Landscapes\\Hitachi.png" });
-            GebiedenLijst.Add(new Landscape { Name = "ParisNights", Image = ".\\Images\\Landscapes\\ParisNights.png" });
-            GebiedenLijst.Add(new Landscape { Name = "Bos", Image = ".\\Images\\Coffee\\Coffee1.png" });
-            GebiedenLijst.Add(new Landscape { Name = "Strand", Image = ".\\Images\\Coffee\\Coffee1.png" });
+            LandscapeList.Add(new Landscape { Name = "Alps", Image = ".\\Images\\Landscapes\\Alps.png" });
+            LandscapeList.Add(new Landscape { Name = "BamboForest", Image = ".\\Images\\Landscapes\\BamboForest.png" });
+            LandscapeList.Add(new Landscape { Name = "Hitachi", Image = ".\\Images\\Landscapes\\Hitachi.png" });
+            LandscapeList.Add(new Landscape { Name = "ParisNights", Image = ".\\Images\\Landscapes\\ParisNights.png" });
+            LandscapeList.Add(new Landscape { Name = "Bos", Image = ".\\Images\\Coffee\\Coffee1.png" });
+            LandscapeList.Add(new Landscape { Name = "Strand", Image = ".\\Images\\Coffee\\Coffee1.png" });
 
             //set images
-            for (int i = 0; i < GebiedenLijst.Count; i++)
+            for (int i = 0; i < LandscapeList.Count; i++)
             {
-                Pictures[i].BackgroundImage = Image.FromFile(GebiedenLijst[i].Image);
-                Pictures[i].Name = GebiedenLijst[i].Name;
+                Pictures[i].BackgroundImage = Image.FromFile(LandscapeList[i].Image);
+                Pictures[i].Name = LandscapeList[i].Name;
                 Pictures[i].Left = XMiddle;
                 Pictures[i].Top = YMiddle;
                 Pictures[i].Click -= CoffeeChoice;
@@ -199,7 +195,7 @@ namespace InovativeCoffeeGUI
         {
             PictureBox TempPicture = (PictureBox)sender;
             //BackgroundImage = TempPicture.BackgroundImage;
-            SelectedLandscape = GebiedenLijst.Find(x => x.Name.Contains(TempPicture.Name));
+            SelectedLandscape = LandscapeList.Find(x => x.Name.Contains(TempPicture.Name));
 
             ButtonOk.Visible = true;
         }
@@ -245,7 +241,7 @@ namespace InovativeCoffeeGUI
 
         private async void OkeButtonClicked(object sender, EventArgs e)
         {
-            MoveControls move = new MoveControls();
+            MoveControls move = new MoveControls(XMiddle, YMiddle);
 
             if (SelectedLandscape == null)
             {
@@ -253,10 +249,10 @@ namespace InovativeCoffeeGUI
                 if (SelectedCoffee != null)
                 {
                     
-                    move.HidePictures(Pictures, XMiddle, YMiddle);
+                    move.HidePictures(Pictures);
                     ToggleOptionsVisibility();
                     FillLandscapes();
-                    move.UnhidePictures(Pictures, XMiddle, YMiddle);
+                    move.UnhidePictures(Pictures);
 
                     ButtonOk.Visible = false;
                 }
@@ -264,7 +260,7 @@ namespace InovativeCoffeeGUI
             else
             {
                 Console.WriteLine("verzend bericht naar server");
-                move.HidePictures(Pictures, XMiddle, YMiddle);
+                move.HidePictures(Pictures);
                 
                 
                 HttpController htc = new HttpController();

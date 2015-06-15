@@ -13,10 +13,10 @@ namespace KoffieAPI
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class InnovativeCoffeeEntities1 : DbContext
+    public partial class InnovativeCoffeeEntities : DbContext
     {
-        public InnovativeCoffeeEntities1()
-            : base("name=InnovativeCoffeeEntities1")
+        public InnovativeCoffeeEntities()
+            : base("name=InnovativeCoffeeEntities")
         {
         }
     
