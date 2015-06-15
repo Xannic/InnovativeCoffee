@@ -1,11 +1,7 @@
 USE [master]
 GO
 
-/****** Object:  Database [InnovativeCoffee]    Script Date: 6/15/2015 10:52:21 ******/
-DROP DATABASE [InnovativeCoffee]
-GO
-
-/****** Object:  Database [InnovativeCoffee]    Script Date: 6/15/2015 10:52:21 ******/
+/****** Object:  Database [InnovativeCoffee]    Script Date: 6/15/2015 11:59:42 ******/
 CREATE DATABASE [InnovativeCoffee]
  CONTAINMENT = NONE
  ON  PRIMARY 

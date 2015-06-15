@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoffeeMachine.Controllers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -35,23 +36,25 @@ namespace InovativeCoffeeGUI
         public OrderForm()
         {
             InitializeComponent();
+            InitializeSystem();
 
-            InitPictureboxes();
-            InitOptions();
             FillCoffeeList();
-
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.WindowState = FormWindowState.Maximized;
-            this.BackColor = Color.FromArgb(36, 27, 18);
         }
 
-        private void InitPictureboxes()
+        private void InitializeSystem()
+        {
+            InitializeVariables();
+            InitializeOptions();
+
+            RenderScreen();
+        }
+
+        private void InitializeVariables()
         {
             //Eerste state van de GUI
             //Coffee Pictures
             CenterPicture = this.pictureBox9;
-            CenterPicture.BackColor = Color.Transparent;
-
+            
             Pictures[0] = pictureBox1;
             Pictures[1] = pictureBox2;
             Pictures[2] = pictureBox3;
@@ -60,22 +63,17 @@ namespace InovativeCoffeeGUI
             Pictures[5] = pictureBox6;
             Pictures[6] = pictureBox7;
             Pictures[7] = pictureBox8;
+           
         }
 
-        private void InitOptions()
+        private void InitializeOptions()
         {
-            SugarPicture = pictureBox11;
-            SugarPicture.BackColor = Color.Transparent;
-            SugarPicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\Suiker.png");
+            PictureController PictureController = new PictureController();
+
+            StrengthPicture = PictureController.GetStrengthOptionPicture(pictureBox10);
+            SugarPicture = PictureController.GetSugarOptionPicture(pictureBox11);
+            MilkPicture = PictureController.GetMilkOptionPicture(pictureBox12);
             
-            StrengthPicture = pictureBox10;
-            StrengthPicture.BackColor = Color.Transparent;
-            StrengthPicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\Sterkte.png");
-
-            MilkPicture = pictureBox12;
-            MilkPicture.BackColor = Color.Transparent;
-            MilkPicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\Melk.png");
-
             StrengthOptions = SetOptionsImages(StrengthOptions, 483, Strength);
             SugarOptions = SetOptionsImages(SugarOptions, 758, Sugar);
             MilkOptions = SetOptionsImages(MilkOptions, 621, Milk);
@@ -86,6 +84,14 @@ namespace InovativeCoffeeGUI
                 SugarOptions[i].Click += SetSugarValue;
                 MilkOptions[i].Click += SetMilkValue;
             }
+        }
+
+        private void RenderScreen()
+        {
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.WindowState = FormWindowState.Maximized;
+            this.BackColor = Color.FromArgb(36, 27, 18);
+            CenterPicture.BackColor = Color.Transparent;
         }
 
         private PictureBox[] SetOptionsImages(PictureBox[] pics, int LocX, int StartValue)
@@ -120,7 +126,7 @@ namespace InovativeCoffeeGUI
         private void FillLandscapes()
         {
             Array.Clear(Pictures, 0, Pictures.Length);
-            InitPictureboxes();
+            InitializeVariables();
 
             LandscapeList.Add(new Landscape { Name = "Alps", Image = ".\\Images\\Landscapes\\Alps.png" });
             LandscapeList.Add(new Landscape { Name = "BamboForest", Image = ".\\Images\\Landscapes\\BamboForest.png" });
@@ -225,8 +231,8 @@ namespace InovativeCoffeeGUI
         {
             InitializeComponent();
 
-            InitPictureboxes();
-            InitOptions();
+            InitializeVariables();
+            InitializeOptions();
             FillCoffeeList();
             BerichtLbl.Visible = false;
 

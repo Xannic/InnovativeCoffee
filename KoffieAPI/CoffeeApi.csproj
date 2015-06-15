@@ -305,6 +305,7 @@
     </Content>
     <None Include="Properties\PublishProfiles\nabil.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\InnovativeCoffeeDB.sql" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
