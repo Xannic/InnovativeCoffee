@@ -31,15 +31,15 @@ namespace CoffeeMachine.Controllers
             return PictureBox;
         }
 
-        private PictureBox[] SetOptionsImages(PictureBox[] pics, int LocX, int StartValue)
+        public PictureBox[] SetOptionsImages(PictureBox[] pics, int LocX, int StartValue)
         {
             int LocY = 670;
             for (int i = 0; i < pics.Length; i++)
             {
                 PictureBox Picture = new PictureBox();
                 Picture.Visible = true;
-                Picture.Size = new Size(125, 20);
-                Picture.Left = LocX;
+                Picture.Size = new Size(89, 20);
+                Picture.Left = LocX+18;
                 Picture.Top = LocY;
                 Picture.BackColor = Color.Transparent;
                 Picture.Name = i.ToString();
@@ -53,7 +53,8 @@ namespace CoffeeMachine.Controllers
                 }
                 pics[i] = Picture;
                 LocY -= 25;
-                Controls.Add(pics[i]);
+                //Control.Add(pics[i]);
+                //Controls.Add(pics[i]);
             }
             return pics;
         }

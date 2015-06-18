@@ -14,9 +14,8 @@ namespace InovativeCoffeeGUI
 {
     public partial class OrderForm : Form
     {
-        private Landscape SelectedLandscape;
-        private Coffee SelectedCoffee;
-
+        OrderController OrderController = new OrderController();
+        
         private List<Coffee> CoffeeList = new List<Coffee>();
         private List<Landscape> LandscapeList = new List<Landscape>();
         private PictureBox[] Pictures = new PictureBox[8];
@@ -31,7 +30,7 @@ namespace InovativeCoffeeGUI
 
         private int XMiddle = 683;
         private int YMiddle = 350;
-        private int Strength = 0, Milk = 0, Sugar = 0;
+        
 
         public OrderForm()
         {
@@ -73,25 +72,35 @@ namespace InovativeCoffeeGUI
             StrengthPicture = PictureController.GetStrengthOptionPicture(pictureBox10);
             SugarPicture = PictureController.GetSugarOptionPicture(pictureBox11);
             MilkPicture = PictureController.GetMilkOptionPicture(pictureBox12);
-            
-            StrengthOptions = SetOptionsImages(StrengthOptions, 483, Strength);
-            SugarOptions = SetOptionsImages(SugarOptions, 758, Sugar);
-            MilkOptions = SetOptionsImages(MilkOptions, 621, Milk);
-            
-            for (int i = 0; i < StrengthOptions.Length; i++)
-            {
-                StrengthOptions[i].Click += SetStrenghtValue;
-                SugarOptions[i].Click += SetSugarValue;
-                MilkOptions[i].Click += SetMilkValue;
-            }
+
+            StrengthOptions = PictureController.SetOptionsImages(StrengthOptions, 483, OrderController.Strength);
+            SugarOptions = PictureController.SetOptionsImages(SugarOptions, 758, OrderController.Sugar);
+            MilkOptions = PictureController.SetOptionsImages(MilkOptions, 621, OrderController.Milk);
+
+            Controls.AddRange(StrengthOptions);
+            Controls.AddRange(SugarOptions);
+            Controls.AddRange(MilkOptions);
+
+            AddClickHandler(StrengthOptions, SetStrenghtValue);
+            AddClickHandler(SugarOptions, SetSugarValue);
+            AddClickHandler(MilkOptions, SetMilkValue);
+                       
         }
 
+        private void AddClickHandler(PictureBox[] Picturebox, EventHandler Method){
+            foreach (PictureBox Picture in Picturebox)
+            {
+                Picture.Click += Method;
+            }
+        }
+        
         private void RenderScreen()
         {
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
             this.BackColor = Color.FromArgb(36, 27, 18);
             CenterPicture.BackColor = Color.Transparent;
+            CenterPicture.BackgroundImage = null;
         }
 
         private PictureBox[] SetOptionsImages(PictureBox[] pics, int LocX, int StartValue)
@@ -166,33 +175,44 @@ namespace InovativeCoffeeGUI
             }
         }
 
+        private void FillUnderlyingPictures(PictureBox[] PictureBoxes, int id)
+        {
+            for (int i = 0; i < PictureBoxes.Length; i++)
+            {
+                if (i <= id) {
+                    PictureBoxes[i].BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionFilled.png");
+                }
+                else
+                {
+                    PictureBoxes[i].BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionNotFilled.png");
+                }
+            }
+        }
+
         private void SetStrenghtValue(object sender, EventArgs e)
         {
             PictureBox TempPicture = (PictureBox)sender;
-            StrengthOptions[Strength].BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionNotFilled.png");
-            TempPicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionFilled.png");
-            Strength = Convert.ToInt32(TempPicture.Name);
+            OrderController.Strength = Convert.ToInt32(TempPicture.Name);
+            FillUnderlyingPictures(StrengthOptions, OrderController.Strength);
         }
         private void SetMilkValue(object sender, EventArgs e)
         {
             PictureBox TempPicture = (PictureBox)sender;
-            MilkOptions[Milk].BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionNotFilled.png");
-            TempPicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionFilled.png");
-            Milk = Convert.ToInt32(TempPicture.Name);
+            OrderController.Milk = Convert.ToInt32(TempPicture.Name);
+            FillUnderlyingPictures(MilkOptions, OrderController.Milk);
         }
         private void SetSugarValue(object sender, EventArgs e)
         {
             PictureBox TempPicture = (PictureBox)sender;
-            SugarOptions[Sugar].BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionNotFilled.png");
-            TempPicture.BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionFilled.png");
-            Sugar = Convert.ToInt32(TempPicture.Name);
+            OrderController.Sugar = Convert.ToInt32(TempPicture.Name);
+            FillUnderlyingPictures(SugarOptions, OrderController.Sugar);
         }
 
         private void CoffeeChoice(object sender, EventArgs e)
         {
             PictureBox TempPicture = (PictureBox)sender;
             CenterPicture.BackgroundImage = TempPicture.BackgroundImage;
-            SelectedCoffee = CoffeeList.Find(x => x.Name.Contains(TempPicture.Name));
+            OrderController.SelectedCoffee = CoffeeList.Find(x => x.Name.Contains(TempPicture.Name));
 
             ButtonOk.Visible = true;
         }
@@ -201,7 +221,7 @@ namespace InovativeCoffeeGUI
         {
             PictureBox TempPicture = (PictureBox)sender;
             //BackgroundImage = TempPicture.BackgroundImage;
-            SelectedLandscape = LandscapeList.Find(x => x.Name.Contains(TempPicture.Name));
+            OrderController.SelectedLandscape = LandscapeList.Find(x => x.Name.Contains(TempPicture.Name));
 
             ButtonOk.Visible = true;
         }
@@ -229,8 +249,9 @@ namespace InovativeCoffeeGUI
 
         private void ResetScreen()
         {
+            OrderController = new OrderController();
             InitializeComponent();
-
+            InitializeSystem();
             InitializeVariables();
             InitializeOptions();
             FillCoffeeList();
@@ -240,8 +261,7 @@ namespace InovativeCoffeeGUI
             this.WindowState = FormWindowState.Maximized;
             this.BackColor = Color.FromArgb(36, 27, 18);
 
-            SelectedCoffee = null;
-            SelectedLandscape = null;
+            
             this.Refresh();
         }
 
@@ -249,10 +269,10 @@ namespace InovativeCoffeeGUI
         {
             MoveControls move = new MoveControls(XMiddle, YMiddle);
 
-            if (SelectedLandscape == null)
+            if (OrderController.SelectedLandscape == null)
             {
-                
-                if (SelectedCoffee != null)
+
+                if (OrderController.SelectedCoffee != null)
                 {
                     
                     move.HidePictures(Pictures);
@@ -274,10 +294,10 @@ namespace InovativeCoffeeGUI
 
                 if (canPlay)
                 {
-                    BerichtLbl.Text = "Uw " + SelectedCoffee.Name + " wordt gezet u kunt naar de belevingskamer lopen.";
+                    BerichtLbl.Text = "Uw " + OrderController.SelectedCoffee.Name + " wordt gezet u kunt naar de belevingskamer lopen.";
                     BerichtLbl.Visible = true;
                     Console.WriteLine("coffee sended");
-                    htc.PostCoffee(SelectedLandscape.Name, SelectedCoffee.Name, 30);
+                    htc.PostCoffee(OrderController.SelectedLandscape.Name, OrderController.SelectedCoffee.Name, 30);
                 }
                 else
                 {
@@ -292,11 +312,11 @@ namespace InovativeCoffeeGUI
 
                         if (htc.CanWePlay())
                         {
-                            BerichtLbl.Text = "Uw " + SelectedCoffee.Name + " wordt gezet u kunt naar de belevingskamer lopen.";
+                            BerichtLbl.Text = "Uw " + OrderController.SelectedCoffee.Name + " wordt gezet u kunt naar de belevingskamer lopen.";
                             this.Refresh();
                             Console.WriteLine("coffee sended");
                             sended = true;
-                            htc.PostCoffee(SelectedLandscape.Name, SelectedCoffee.Name, 30);
+                            htc.PostCoffee(OrderController.SelectedLandscape.Name, OrderController.SelectedCoffee.Name, 30);
                         }
                     }
                 }
@@ -306,7 +326,7 @@ namespace InovativeCoffeeGUI
                 BerichtLbl.Visible = false;
                 ResetScreen();
                 
-                }            
+            }            
         }
     }
 }
