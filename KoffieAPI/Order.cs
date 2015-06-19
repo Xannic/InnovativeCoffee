@@ -16,8 +16,16 @@ namespace KoffieAPI
     {
         public int Id { get; set; }
         public Nullable<int> DrinkId { get; set; }
-        
         public Nullable<int> LandscapeId { get; set; }
         public Nullable<bool> Played { get; set; }
+        public Nullable<int> Milk { get; set; }
+        public Nullable<int> Strength { get; set; }
+        public Nullable<int> Sugar { get; set; }
+        public Nullable<int> DeviceId { get; set; }
+        public string Time_Seconds { get; set; }
+        public Nullable<System.DateTime> Orderdate { get; set; }
+    
+        public virtual Drink Drink { get; set; }
+        public virtual Landscape Landscape { get; set; }
     }
 }

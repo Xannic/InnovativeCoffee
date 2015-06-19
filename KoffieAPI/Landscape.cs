@@ -14,9 +14,16 @@ namespace KoffieAPI
     
     public partial class Landscape
     {
+        public Landscape()
+        {
+            this.Orders = new HashSet<Order>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public byte[] Image { get; set; }
         public Nullable<int> Duration { get; set; }
+    
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

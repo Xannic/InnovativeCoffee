@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ICModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Drink">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="text" />
+          <Property Name="Sugar" Type="bit" Nullable="false" />
+          <Property Name="Milk" Type="bit" Nullable="false" />
+          <Property Name="Strength" Type="bit" Nullable="false" />
+          <Property Name="Image" Type="image" />
+        </EntityType>
+        <EntityType Name="Landscape">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="text" />
+          <Property Name="Image" Type="image" />
+          <Property Name="Duration" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'InnovativeCoffee.dbo.Order' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DrinkId" Type="int" />
+          <Property Name="LandscapeId" Type="int" />
+          <Property Name="Played" Type="bit" />
+          <Property Name="Milk" Type="int" />
+          <Property Name="Strength" Type="int" />
+          <Property Name="Sugar" Type="int" />
+        </EntityType>
+        <Association Name="FK_Order_Drink">
+          <End Role="Drink" Type="Self.Drink" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drink">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DrinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Landscape">
+          <End Role="Landscape" Type="Self.Landscape" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Landscape">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="LandscapeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ICModelStoreContainer">
+          <EntitySet Name="Drink" EntityType="Self.Drink" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Landscape" EntityType="Self.Landscape" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[Order].[Id] AS [Id], 
+[Order].[DrinkId] AS [DrinkId], 
+[Order].[LandscapeId] AS [LandscapeId], 
+[Order].[Played] AS [Played], 
+[Order].[Milk] AS [Milk], 
+[Order].[Strength] AS [Strength], 
+[Order].[Sugar] AS [Sugar]
+FROM [dbo].[Order] AS [Order]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Order_Drink" Association="Self.FK_Order_Drink">
+            <End Role="Drink" EntitySet="Drink" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Landscape" Association="Self.FK_Order_Landscape">
+            <End Role="Landscape" EntitySet="Landscape" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ICModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ICModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Drink" EntityType="ICModel.Drink" />
+          <EntitySet Name="Landscape" EntityType="ICModel.Landscape" />
+          <EntitySet Name="Order" EntityType="ICModel.Order" />
+          <AssociationSet Name="FK_Order_Drink" Association="ICModel.FK_Order_Drink">
+            <End Role="Drink" EntitySet="Drink" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Landscape" Association="ICModel.FK_Order_Landscape">
+            <End Role="Landscape" EntitySet="Landscape" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Drink">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Sugar" Type="Boolean" Nullable="false" />
+          <Property Name="Milk" Type="Boolean" Nullable="false" />
+          <Property Name="Strength" Type="Boolean" Nullable="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Order" Relationship="ICModel.FK_Order_Drink" FromRole="Drink" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Landscape">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Duration" Type="Int32" />
+          <NavigationProperty Name="Order" Relationship="ICModel.FK_Order_Landscape" FromRole="Landscape" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DrinkId" Type="Int32" />
+          <Property Name="LandscapeId" Type="Int32" />
+          <Property Name="Played" Type="Boolean" />
+          <Property Name="Milk" Type="Int32" />
+          <Property Name="Strength" Type="Int32" />
+          <Property Name="Sugar" Type="Int32" />
+          <NavigationProperty Name="Drink" Relationship="ICModel.FK_Order_Drink" FromRole="Order" ToRole="Drink" />
+          <NavigationProperty Name="Landscape" Relationship="ICModel.FK_Order_Landscape" FromRole="Order" ToRole="Landscape" />
+        </EntityType>
+        <Association Name="FK_Order_Drink">
+          <End Type="ICModel.Drink" Role="Drink" Multiplicity="0..1" />
+          <End Type="ICModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drink">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DrinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Landscape">
+          <End Type="ICModel.Landscape" Role="Landscape" Multiplicity="0..1" />
+          <End Type="ICModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Landscape">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="LandscapeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="ICModel" />
+        <Alias Key="Target" Value="ICModel.Store" />
+        <EntityContainerMapping CdmEntityContainer="ICModelContainer" StorageEntityContainer="ICModelStoreContainer">
+          <EntitySetMapping Name="Drink">
+            <EntityTypeMapping TypeName="ICModel.Drink">
+              <MappingFragment StoreEntitySet="Drink">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Strength" ColumnName="Strength" />
+                <ScalarProperty Name="Milk" ColumnName="Milk" />
+                <ScalarProperty Name="Sugar" ColumnName="Sugar" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Landscape">
+            <EntityTypeMapping TypeName="ICModel.Landscape">
+              <MappingFragment StoreEntitySet="Landscape">
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="ICModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Sugar" ColumnName="Sugar" />
+                <ScalarProperty Name="Strength" ColumnName="Strength" />
+                <ScalarProperty Name="Milk" ColumnName="Milk" />
+                <ScalarProperty Name="Played" ColumnName="Played" />
+                <ScalarProperty Name="LandscapeId" ColumnName="LandscapeId" />
+                <ScalarProperty Name="DrinkId" ColumnName="DrinkId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

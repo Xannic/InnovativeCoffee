@@ -14,11 +14,15 @@ namespace KoffieAPI
     
     public partial class Drink
     {
+        public Drink()
+        {
+            this.Orders = new HashSet<Order>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
-        public Nullable<int> Sugar { get; set; }
-        public Nullable<int> Milk { get; set; }
-        public Nullable<int> Strength { get; set; }
         public byte[] Image { get; set; }
+    
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

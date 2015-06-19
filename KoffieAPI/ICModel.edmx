@@ -4,16 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="InnovativeCoffeeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="InnovativeCoffeeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Drink">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="text" />
-          <Property Name="Sugar" Type="int" />
-          <Property Name="Milk" Type="int" />
-          <Property Name="Strength" Type="int" />
           <Property Name="Image" Type="image" />
         </EntityType>
         <EntityType Name="Landscape">
@@ -25,8 +22,6 @@
           <Property Name="Image" Type="image" />
           <Property Name="Duration" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'InnovativeCoffee.dbo.Order' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="Id" />
@@ -35,21 +30,51 @@ warning 6002: The table/view 'InnovativeCoffee.dbo.Order' does not have a primar
           <Property Name="DrinkId" Type="int" />
           <Property Name="LandscapeId" Type="int" />
           <Property Name="Played" Type="bit" />
+          <Property Name="Milk" Type="int" />
+          <Property Name="Strength" Type="int" />
+          <Property Name="Sugar" Type="int" />
+          <Property Name="DeviceId" Type="int" />
+          <Property Name="Time_Seconds" Type="varchar" MaxLength="50" />
+          <Property Name="Orderdate" Type="datetime" />
         </EntityType>
+        <Association Name="FK_Order_Drink">
+          <End Role="Drink" Type="Self.Drink" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drink">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DrinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Landscape">
+          <End Role="Landscape" Type="Self.Landscape" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Landscape">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="LandscapeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="InnovativeCoffeeModelStoreContainer">
           <EntitySet Name="Drink" EntityType="Self.Drink" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Landscape" EntityType="Self.Landscape" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Order" EntityType="Self.Order" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Order].[Id] AS [Id], 
-    [Order].[DrinkId] AS [DrinkId], 
-    [Order].[LandscapeId] AS [LandscapeId], 
-    [Order].[Played] AS [Played]
-    FROM [dbo].[Order] AS [Order]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Order_Drink" Association="Self.FK_Order_Drink">
+            <End Role="Drink" EntitySet="Drink" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Landscape" Association="Self.FK_Order_Landscape">
+            <End Role="Landscape" EntitySet="Landscape" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InnovativeCoffeeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -59,10 +84,8 @@ warning 6002: The table/view 'InnovativeCoffee.dbo.Order' does not have a primar
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Sugar" Type="Int32" />
-          <Property Name="Milk" Type="Int32" />
-          <Property Name="Strength" Type="Int32" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Orders" Relationship="InnovativeCoffeeModel.FK_Order_Drink" FromRole="Drink" ToRole="Order" />
         </EntityType>
         <EntityType Name="Landscape">
           <Key>
@@ -72,6 +95,7 @@ warning 6002: The table/view 'InnovativeCoffee.dbo.Order' does not have a primar
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Duration" Type="Int32" />
+          <NavigationProperty Name="Orders" Relationship="InnovativeCoffeeModel.FK_Order_Landscape" FromRole="Landscape" ToRole="Order" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -81,12 +105,52 @@ warning 6002: The table/view 'InnovativeCoffee.dbo.Order' does not have a primar
           <Property Name="DrinkId" Type="Int32" />
           <Property Name="LandscapeId" Type="Int32" />
           <Property Name="Played" Type="Boolean" />
+          <Property Name="Milk" Type="Int32" />
+          <Property Name="Strength" Type="Int32" />
+          <Property Name="Sugar" Type="Int32" />
+          <NavigationProperty Name="Drink" Relationship="InnovativeCoffeeModel.FK_Order_Drink" FromRole="Order" ToRole="Drink" />
+          <NavigationProperty Name="Landscape" Relationship="InnovativeCoffeeModel.FK_Order_Landscape" FromRole="Order" ToRole="Landscape" />
+          <Property Name="DeviceId" Type="Int32" />
+          <Property Name="Time_Seconds" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Orderdate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityContainer Name="InnovativeCoffeeEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Drinks" EntityType="Self.Drink" />
           <EntitySet Name="Landscapes" EntityType="Self.Landscape" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
+          <AssociationSet Name="FK_Order_Drink" Association="InnovativeCoffeeModel.FK_Order_Drink">
+            <End Role="Drink" EntitySet="Drinks" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Landscape" Association="InnovativeCoffeeModel.FK_Order_Landscape">
+            <End Role="Landscape" EntitySet="Landscapes" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Order_Drink">
+          <End Type="InnovativeCoffeeModel.Drink" Role="Drink" Multiplicity="0..1" />
+          <End Type="InnovativeCoffeeModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drink">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DrinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Landscape">
+          <End Type="InnovativeCoffeeModel.Landscape" Role="Landscape" Multiplicity="0..1" />
+          <End Type="InnovativeCoffeeModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Landscape">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="LandscapeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -98,9 +162,6 @@ warning 6002: The table/view 'InnovativeCoffee.dbo.Order' does not have a primar
               <MappingFragment StoreEntitySet="Drink">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Sugar" ColumnName="Sugar" />
-                <ScalarProperty Name="Milk" ColumnName="Milk" />
-                <ScalarProperty Name="Strength" ColumnName="Strength" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -118,6 +179,12 @@ warning 6002: The table/view 'InnovativeCoffee.dbo.Order' does not have a primar
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="InnovativeCoffeeModel.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Orderdate" ColumnName="Orderdate" />
+                <ScalarProperty Name="Time_Seconds" ColumnName="Time_Seconds" />
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="Sugar" ColumnName="Sugar" />
+                <ScalarProperty Name="Strength" ColumnName="Strength" />
+                <ScalarProperty Name="Milk" ColumnName="Milk" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DrinkId" ColumnName="DrinkId" />
                 <ScalarProperty Name="LandscapeId" ColumnName="LandscapeId" />

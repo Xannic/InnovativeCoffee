@@ -8,6 +8,8 @@
         <EntityTypeShape EntityType="InnovativeCoffeeModel.Drink" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="InnovativeCoffeeModel.Landscape" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="InnovativeCoffeeModel.Order" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="InnovativeCoffeeModel.FK_Order_Drink" />
+        <AssociationConnector Association="InnovativeCoffeeModel.FK_Order_Landscape" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
