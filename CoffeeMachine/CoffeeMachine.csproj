@@ -32,29 +32,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DrinkController.cs" />
     <Compile Include="Controllers\HttpController.cs" />
-    <Compile Include="Controllers\MoveControls.cs" />
+    <Compile Include="Controllers\LandscapeController.cs" />
+    <Compile Include="Controllers\MoveController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PictureController.cs" />
     <Compile Include="Models\Coordinaten.cs" />
     <Compile Include="Models\Landscape.cs" />
-    <Compile Include="Models\Coffee.cs" />
+    <Compile Include="Models\Drink.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="OrderForm.cs">
       <SubType>Form</SubType>
@@ -64,6 +61,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTest\HttpControllerTest.cs" />
     <EmbeddedResource Include="OrderForm.resx">
       <DependentUpon>OrderForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -75,6 +73,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -91,7 +90,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\Coffee\Coffee1.png">
+    <Content Include="Images\Drinks\Coffee1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Landscapes\Alps.png">
@@ -103,13 +102,13 @@
     <Content Include="Images\Landscapes\Hitachi.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Coffee\Chocolade.png">
+    <Content Include="Images\Drinks\Chocolade.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Coffee\Espresso.png">
+    <Content Include="Images\Drinks\Espresso.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Coffee\Thee.png">
+    <Content Include="Images\Drinks\Thee.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Options\Milk.png">

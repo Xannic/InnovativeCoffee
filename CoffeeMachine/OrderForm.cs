@@ -1,43 +1,43 @@
-﻿using CoffeeMachine.Controllers;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
+using CoffeeMachine.Controllers;
+using CoffeeMachine.Models;
+using CoffeeMachine.Properties;
 
-namespace InovativeCoffeeGUI
+namespace CoffeeMachine
 {
     public partial class OrderForm : Form
     {
-        OrderController OrderController = new OrderController();
+        OrderController _orderController = new OrderController();
+        readonly DrinkController _drinkController = new DrinkController();
+        readonly LandscapeController _landscapeController = new LandscapeController();
         
-        private List<Coffee> CoffeeList = new List<Coffee>();
-        private List<Landscape> LandscapeList = new List<Landscape>();
-        private PictureBox[] Pictures = new PictureBox[8];
-        PictureBox[] StrengthOptions = new PictureBox[5];
-        PictureBox[] MilkOptions = new PictureBox[5];
-        PictureBox[] SugarOptions = new PictureBox[5];
+        //private List<Drink> DrinkList = new List<Drink>();
+        //private List<Landscape> LandscapeList = new List<Landscape>();
+        private PictureBox[] _pictures = new PictureBox[8];
+        PictureBox[] _strengthOptions = new PictureBox[5];
+        PictureBox[] _milkOptions = new PictureBox[5];
+        PictureBox[] _sugarOptions = new PictureBox[5];
 
-        private PictureBox CenterPicture;
-        private PictureBox SugarPicture;
-        private PictureBox StrengthPicture;
-        private PictureBox MilkPicture;
-
+        private PictureBox _centerPicture;
+        private PictureBox _sugarPicture;
+        private PictureBox _strengthPicture;
+        private PictureBox _milkPicture;
+        
         private int XMiddle = 683;
         private int YMiddle = 350;
+        private int _stepNumber = 1;
         
-
         public OrderForm()
         {
             InitializeComponent();
             InitializeSystem();
 
-            FillCoffeeList();
+            FillPictureboxes(_drinkController.Drinks);
+            
         }
 
         private void InitializeSystem()
@@ -52,281 +52,380 @@ namespace InovativeCoffeeGUI
         {
             //Eerste state van de GUI
             //Coffee Pictures
-            CenterPicture = this.pictureBox9;
+            _centerPicture = pictureBox9;
             
-            Pictures[0] = pictureBox1;
-            Pictures[1] = pictureBox2;
-            Pictures[2] = pictureBox3;
-            Pictures[3] = pictureBox4;
-            Pictures[4] = pictureBox5;
-            Pictures[5] = pictureBox6;
-            Pictures[6] = pictureBox7;
-            Pictures[7] = pictureBox8;
+            _pictures[0] = pictureBox1;
+            _pictures[1] = pictureBox2;
+            _pictures[2] = pictureBox3;
+            _pictures[3] = pictureBox4;
+            _pictures[4] = pictureBox5;
+            _pictures[5] = pictureBox6;
+            _pictures[6] = pictureBox7;
+            _pictures[7] = pictureBox8;
            
         }
 
         private void InitializeOptions()
         {
-            PictureController PictureController = new PictureController();
+            PictureController pictureController = new PictureController();
 
-            StrengthPicture = PictureController.GetStrengthOptionPicture(pictureBox10);
-            SugarPicture = PictureController.GetSugarOptionPicture(pictureBox11);
-            MilkPicture = PictureController.GetMilkOptionPicture(pictureBox12);
+            _strengthPicture = pictureController.GetStrengthOptionPicture(pictureBox10);
+            _sugarPicture = pictureController.GetSugarOptionPicture(pictureBox11);
+            _milkPicture = pictureController.GetMilkOptionPicture(pictureBox12);
 
-            StrengthOptions = PictureController.SetOptionsImages(StrengthOptions, 483, OrderController.Strength);
-            SugarOptions = PictureController.SetOptionsImages(SugarOptions, 758, OrderController.Sugar);
-            MilkOptions = PictureController.SetOptionsImages(MilkOptions, 621, OrderController.Milk);
+            _strengthOptions = pictureController.SetOptionsImages(_strengthOptions, 483, _orderController.Strength);
+            _sugarOptions = pictureController.SetOptionsImages(_sugarOptions, 758, _orderController.Sugar);
+            _milkOptions = pictureController.SetOptionsImages(_milkOptions, 621, _orderController.Milk);
 
-            Controls.AddRange(StrengthOptions);
-            Controls.AddRange(SugarOptions);
-            Controls.AddRange(MilkOptions);
+            Controls.AddRange(_strengthOptions);
+            Controls.AddRange(_sugarOptions);
+            Controls.AddRange(_milkOptions);
 
-            AddClickHandler(StrengthOptions, SetStrenghtValue);
-            AddClickHandler(SugarOptions, SetSugarValue);
-            AddClickHandler(MilkOptions, SetMilkValue);
+            AddClickHandler(_strengthOptions, SetStrenghtValue);
+            AddClickHandler(_sugarOptions, SetSugarValue);
+            AddClickHandler(_milkOptions, SetMilkValue);
                        
         }
 
-        private void AddClickHandler(PictureBox[] Picturebox, EventHandler Method){
-            foreach (PictureBox Picture in Picturebox)
+        private void FillPictureboxes(List<Drink> drinks)
+        {
+            ClearImages();
+
+            for (int i = 0; i < drinks.Count; i++)
             {
-                Picture.Click += Method;
+                _pictures[i].BackgroundImage = Image.FromFile(drinks[i].Image);
+                _pictures[i].Name = drinks[i].Name;
+                _pictures[i].BackColor = Color.Transparent;
+                _pictures[i].Click += DrinkChoiceClick;
+                _pictures[i].Click -= LandscapeChoiceClick;
+            }
+        }
+
+        private void ClearImages()
+        {
+            foreach (PictureBox picture in _pictures)
+            {
+                picture.BackgroundImage = null;
+            }
+        }
+
+        private void FillPictureboxes(List<Landscape> landscapes)
+        {
+            ClearImages();
+
+            for (int i = 0; i < landscapes.Count; i++)
+            {
+                _pictures[i].BackgroundImage = Image.FromFile(landscapes[i].Image);
+                _pictures[i].Name = landscapes[i].Name;
+                _pictures[i].Click -= DrinkChoiceClick;
+                _pictures[i].Click += LandscapeChoiceClick;
+            }
+        }
+
+        private void AddClickHandler(IEnumerable<PictureBox> picturebox, EventHandler method){
+            foreach (var picture in picturebox)
+            {
+                picture.Click += method;
             }
         }
         
         private void RenderScreen()
         {
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.WindowState = FormWindowState.Maximized;
-            this.BackColor = Color.FromArgb(36, 27, 18);
-            CenterPicture.BackColor = Color.Transparent;
-            CenterPicture.BackgroundImage = null;
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
+            BackColor = Color.FromArgb(36, 27, 18);
+            _centerPicture.BackColor = Color.Transparent;
+            _centerPicture.BackgroundImage = null;
         }
-
-        private PictureBox[] SetOptionsImages(PictureBox[] pics, int LocX, int StartValue)
-        {
-            int LocY = 670;
-            for (int i = 0; i < pics.Length; i++)
-            {
-                PictureBox p = new PictureBox();
-                p.Visible = true;
-                p.Size = new Size(125, 20);
-                p.Left = LocX;
-                p.Top = LocY;
-                p.BackColor = Color.Transparent;
-                p.Name = i.ToString();
-                if (i == (StartValue))
-                {
-                    p.BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionFilled.png");
-                }
-                else
-                {
-                    p.BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionNotFilled.png");
-                }
-                pics[i] = p;
-                LocY -= 25;
-                Controls.Add(pics[i]);
-            }
-            return pics;
-        }
-
-
 
         private void FillLandscapes()
         {
-            Array.Clear(Pictures, 0, Pictures.Length);
+            /*
+            Array.Clear(_pictures, 0, _pictures.Length);
             InitializeVariables();
 
-            LandscapeList.Add(new Landscape { Name = "Alps", Image = ".\\Images\\Landscapes\\Alps.png" });
-            LandscapeList.Add(new Landscape { Name = "BamboForest", Image = ".\\Images\\Landscapes\\BamboForest.png" });
-            LandscapeList.Add(new Landscape { Name = "Hitachi", Image = ".\\Images\\Landscapes\\Hitachi.png" });
-            LandscapeList.Add(new Landscape { Name = "ParisNights", Image = ".\\Images\\Landscapes\\ParisNights.png" });
+            LandscapeList.Add(new Landscape { Name = "Alps", Image = ".\\Images\\Drink\\Alps.png" });
+            LandscapeList.Add(new Landscape { Name = "BamboForest", Image = ".\\Images\\Drink\\BamboForest.png" });
+            LandscapeList.Add(new Landscape { Name = "Hitachi", Image = ".\\Images\\Drink\\Hitachi.png" });
+            LandscapeList.Add(new Landscape { Name = "ParisNights", Image = ".\\Images\\Drink\\ParisNights.png" });
             LandscapeList.Add(new Landscape { Name = "Bos", Image = ".\\Images\\Coffee\\Coffee1.png" });
             LandscapeList.Add(new Landscape { Name = "Strand", Image = ".\\Images\\Coffee\\Coffee1.png" });
 
             //set images
             for (int i = 0; i < LandscapeList.Count; i++)
             {
-                Pictures[i].BackgroundImage = Image.FromFile(LandscapeList[i].Image);
-                Pictures[i].Name = LandscapeList[i].Name;
-                Pictures[i].Left = XMiddle;
-                Pictures[i].Top = YMiddle;
-                Pictures[i].Click -= CoffeeChoice;
-                Pictures[i].Click += LandscapeChoiceClick;
+                _pictures[i].BackgroundImage = Image.FromFile(LandscapeList[i].Image);
+                _pictures[i].Name = LandscapeList[i].Name;
+                _pictures[i].Left = XMiddle;
+                _pictures[i].Top = YMiddle;
+                _pictures[i].Click -= DrinkChoiceClick;
+                _pictures[i].Click += LandscapeChoiceClick;
             }
+            */
         }
 
         private void FillCoffeeList()
         {
-            CoffeeList.Add(new Coffee { Name = "Cappucinno", Image = ".\\Images\\Coffee\\Coffee1.png" });
-            CoffeeList.Add(new Coffee { Name = "Ristretto", Image = ".\\Images\\Coffee\\Coffee1.png" });
-            CoffeeList.Add(new Coffee { Name = "Espresso", Image = ".\\Images\\Coffee\\Espresso.png" });
-            CoffeeList.Add(new Coffee { Name = "Variatie Coffee", Image = ".\\Images\\Coffee\\Coffee1.png" });
-            CoffeeList.Add(new Coffee { Name = "Doubble Espresso", Image = ".\\Images\\Coffee\\Coffee1.png" });
-            CoffeeList.Add(new Coffee { Name = "Cafe Creme", Image = ".\\Images\\Coffee\\Coffee1.png" });
-            CoffeeList.Add(new Coffee { Name = "Warme Chocomelk", Image = ".\\Images\\Coffee\\Chocolade.png" });
-            CoffeeList.Add(new Coffee { Name = "Thee", Image = ".\\Images\\Coffee\\Thee.png" });
+            /*
+            DrinkList.Add(new Drink { Name = "Cappucinno", Image = ".\\Images\\Drink\\Coffee1.png" });
+            DrinkList.Add(new Drink { Name = "Ristretto", Image = ".\\Images\\Drink\\Coffee1.png" });
+            DrinkList.Add(new Drink { Name = "Espresso", Image = ".\\Images\\Drink\\Espresso.png" });
+            DrinkList.Add(new Drink { Name = "Variatie Coffee", Image = ".\\Images\\Drink\\Coffee1.png" });
+            DrinkList.Add(new Drink { Name = "Doubble Espresso", Image = ".\\Images\\Drink\\Coffee1.png" });
+            DrinkList.Add(new Drink { Name = "Cafe Creme", Image = ".\\Images\\Drink\\Coffee1.png" });
+            DrinkList.Add(new Drink { Name = "Warme Chocomelk", Image = ".\\Images\\Drink\\Chocolade.png" });
+            DrinkList.Add(new Drink { Name = "Thee", Image = ".\\Images\\Drink\\Thee.png" });
             
-            for (int i = 0; i < Pictures.Length; i++)
+            for (int i = 0; i < _pictures.Length; i++)
             {
-                Pictures[i].BackgroundImage = Image.FromFile(CoffeeList[i].Image);
-                Pictures[i].Name = CoffeeList[i].Name;
-                Pictures[i].BackColor = Color.Transparent;
+                _pictures[i].BackgroundImage = Image.FromFile(DrinkList[i].Image);
+                _pictures[i].Name = DrinkList[i].Name;
+                _pictures[i].BackColor = Color.Transparent;
             }
+             */
         }
 
-        private void FillUnderlyingPictures(PictureBox[] PictureBoxes, int id)
+        private void FillUnderlyingPictures(PictureBox[] pictureBoxes, int id)
         {
-            for (int i = 0; i < PictureBoxes.Length; i++)
+            for (int i = 0; i < pictureBoxes.Length; i++)
             {
                 if (i <= id) {
-                    PictureBoxes[i].BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionFilled.png");
+                    pictureBoxes[i].BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionFilled.png");
                 }
                 else
                 {
-                    PictureBoxes[i].BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionNotFilled.png");
+                    pictureBoxes[i].BackgroundImage = Image.FromFile(".\\Images\\Options\\OptionNotFilled.png");
                 }
             }
         }
 
         private void SetStrenghtValue(object sender, EventArgs e)
         {
-            PictureBox TempPicture = (PictureBox)sender;
-            OrderController.Strength = Convert.ToInt32(TempPicture.Name);
-            FillUnderlyingPictures(StrengthOptions, OrderController.Strength);
+            PictureBox tempPicture = (PictureBox)sender;
+            _orderController.Strength = Convert.ToInt32(tempPicture.Name);
+            FillUnderlyingPictures(_strengthOptions, _orderController.Strength);
         }
         private void SetMilkValue(object sender, EventArgs e)
         {
-            PictureBox TempPicture = (PictureBox)sender;
-            OrderController.Milk = Convert.ToInt32(TempPicture.Name);
-            FillUnderlyingPictures(MilkOptions, OrderController.Milk);
+            PictureBox tempPicture = (PictureBox)sender;
+            _orderController.Milk = Convert.ToInt32(tempPicture.Name);
+            FillUnderlyingPictures(_milkOptions, _orderController.Milk);
         }
         private void SetSugarValue(object sender, EventArgs e)
         {
-            PictureBox TempPicture = (PictureBox)sender;
-            OrderController.Sugar = Convert.ToInt32(TempPicture.Name);
-            FillUnderlyingPictures(SugarOptions, OrderController.Sugar);
+            PictureBox tempPicture = (PictureBox)sender;
+            _orderController.Sugar = Convert.ToInt32(tempPicture.Name);
+            FillUnderlyingPictures(_sugarOptions, _orderController.Sugar);
         }
 
-        private void CoffeeChoice(object sender, EventArgs e)
+        private void DrinkChoiceClick(object sender, EventArgs e)
         {
-            PictureBox TempPicture = (PictureBox)sender;
-            CenterPicture.BackgroundImage = TempPicture.BackgroundImage;
-            OrderController.SelectedCoffee = CoffeeList.Find(x => x.Name.Contains(TempPicture.Name));
+            PictureBox tempPicture = (PictureBox)sender;
+            _centerPicture.BackgroundImage = tempPicture.BackgroundImage;
+            _orderController.SelectedCoffee = _drinkController.Drinks.Find(x => x.Name.Contains(tempPicture.Name));
 
             ButtonOk.Visible = true;
         }
 
         private void LandscapeChoiceClick(object sender, EventArgs e)
         {
-            PictureBox TempPicture = (PictureBox)sender;
+            PictureBox tempPicture = (PictureBox)sender;
             //BackgroundImage = TempPicture.BackgroundImage;
-            OrderController.SelectedLandscape = LandscapeList.Find(x => x.Name.Contains(TempPicture.Name));
+            _orderController.SelectedLandscape = _landscapeController.Landscapes.Find(x => x.Name.Contains(tempPicture.Name));
 
             ButtonOk.Visible = true;
         }
 
-        private void ToggleOptionsVisibility()
+        private void OptionsVisibility(bool visiblity)
         {
-            StrengthPicture.Visible = !StrengthPicture.Visible;
-            foreach (PictureBox picture in StrengthOptions)
+            _strengthPicture.Visible = visiblity;
+            foreach (PictureBox picture in _strengthOptions)
             {
-                picture.Visible = !picture.Visible;
+                picture.Visible = visiblity;
             }
 
-            MilkPicture.Visible = !MilkPicture.Visible;
-            foreach (PictureBox picture in MilkOptions)
+            _milkPicture.Visible = !_milkPicture.Visible;
+            foreach (PictureBox picture in _milkOptions)
             {
-                picture.Visible = !picture.Visible;
+                picture.Visible = visiblity;
             }
 
-            SugarPicture.Visible = !SugarPicture.Visible;
-            foreach (PictureBox picture in SugarOptions)
+            _sugarPicture.Visible = !_sugarPicture.Visible;
+            foreach (PictureBox picture in _sugarOptions)
             {
-                picture.Visible = !picture.Visible;
+                picture.Visible = visiblity;
             }
         }
 
         private void ResetScreen()
         {
-            OrderController = new OrderController();
+            _orderController = new OrderController();
             InitializeComponent();
             InitializeSystem();
             InitializeVariables();
             InitializeOptions();
-            FillCoffeeList();
+            FillPictureboxes(_drinkController.Drinks);
+            
             BerichtLbl.Visible = false;
 
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.WindowState = FormWindowState.Maximized;
-            this.BackColor = Color.FromArgb(36, 27, 18);
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
+            BackColor = Color.FromArgb(36, 27, 18);
+            _centerPicture.Visible = false;
+            _stepNumber = 1;
 
-            
-            this.Refresh();
+            Refresh();
         }
 
-        private async void OkeButtonClicked(object sender, EventArgs e)
+        private void GoToStepTwo()
         {
-            MoveControls move = new MoveControls(XMiddle, YMiddle);
+            MoveController move = new MoveController(XMiddle, YMiddle);
 
-            if (OrderController.SelectedLandscape == null)
+            OptionsVisibility(false);
+            ButtonOk.Visible = false;
+            ButtonBack.Visible = true;
+            move.HidePictures(_pictures);
+            
+            FillPictureboxes(_landscapeController.Landscapes);
+            move.UnhidePictures(_pictures);
+            _stepNumber = 2;
+
+        }
+
+        private async void SendToServer()
+        {
+            MoveController move = new MoveController(XMiddle, YMiddle);
+            HttpController httpController = new HttpController();
+            var fooCaller = new Func<bool>(httpController.CanWePlay);
+
+            var asyncResult = fooCaller.BeginInvoke(null, null);
+            move.HidePictures(_pictures);
+
+            asyncResult.AsyncWaitHandle.WaitOne();
+            bool canPlay = fooCaller.EndInvoke(asyncResult);
+            if (canPlay)
+            {
+                BerichtLbl.Text = "Uw " + _orderController.SelectedCoffee.Name + " wordt gezet u kunt naar de belevingskamer lopen.";
+                BerichtLbl.Visible = true;
+                    
+                httpController.PostCoffee(_orderController.SelectedLandscape.Name, _orderController.SelectedCoffee.Name, 30);
+            }
+            else
+            {
+                BerichtLbl.Text = Resources.ChamberInUse;
+                BerichtLbl.Visible = true;
+                bool sended = false;
+                this.Refresh();
+                    
+                while (!sended)
+                {
+                    Thread.Sleep(1500);
+
+                    if (httpController.CanWePlay())
+                    {
+                        BerichtLbl.Text = "Uw " + _orderController.SelectedCoffee.Name + " wordt gezet u kunt naar de belevingskamer lopen.";
+                        Refresh();
+                            
+                        sended = true;
+                        httpController.PostCoffee(_orderController.SelectedLandscape.Name, _orderController.SelectedCoffee.Name, 30);
+                    }
+                }
+            }
+
+            Thread.Sleep(3000);
+
+            BerichtLbl.Visible = false;
+            ResetScreen();
+                                
+        }
+
+        private void BackButtonClicked(object sender, EventArgs e)
+        {
+            MoveController move = new MoveController(XMiddle, YMiddle);
+
+            OptionsVisibility(true);
+            ButtonOk.Visible = true;
+            ButtonBack.Visible = false;
+            move.HidePictures(_pictures);
+
+            FillPictureboxes(_drinkController.Drinks);
+            move.UnhidePictures(_pictures);
+            _stepNumber = 1;
+        }
+
+        private void OkeButtonClicked(object sender, EventArgs e)
+        {
+            MoveController move = new MoveController(XMiddle, YMiddle);
+
+            switch (_stepNumber)
+            {
+                case 1:
+                    if (_orderController.SelectedCoffee == null) return;
+                    GoToStepTwo();
+
+                    break;
+                case 2:
+                    if (_orderController.SelectedLandscape == null) return;
+                    SendToServer();
+                    break;
+            }
+            /*
+            if (_orderController.SelectedLandscape == null)
             {
 
-                if (OrderController.SelectedCoffee != null)
+                if (_orderController.SelectedCoffee != null)
                 {
                     
-                    move.HidePictures(Pictures);
-                    ToggleOptionsVisibility();
-                    FillLandscapes();
-                    move.UnhidePictures(Pictures);
+                    move.HidePictures(_pictures);
+                    OptionsVisibility(false);
+                    FillPictureboxes(_landscapeController.Landscapes);
+                    move.UnhidePictures(_pictures);
 
                     ButtonOk.Visible = false;
                 }
             }
             else
             {
-                Console.WriteLine("verzend bericht naar server");
-                move.HidePictures(Pictures);
-                
+                move.HidePictures(_pictures);
                 
                 HttpController htc = new HttpController();
                 bool canPlay = htc.CanWePlay();
 
                 if (canPlay)
                 {
-                    BerichtLbl.Text = "Uw " + OrderController.SelectedCoffee.Name + " wordt gezet u kunt naar de belevingskamer lopen.";
+                    BerichtLbl.Text = "Uw " + _orderController.SelectedCoffee.Name + " wordt gezet u kunt naar de belevingskamer lopen.";
                     BerichtLbl.Visible = true;
-                    Console.WriteLine("coffee sended");
-                    htc.PostCoffee(OrderController.SelectedLandscape.Name, OrderController.SelectedCoffee.Name, 30);
+                    
+                    htc.PostCoffee(_orderController.SelectedLandscape.Name, _orderController.SelectedCoffee.Name, 30);
                 }
                 else
                 {
-                    BerichtLbl.Text = "De belevingskamer is in gebruik een moment geduld aub..";
+                    BerichtLbl.Text = Resources.ChamberInUse;
                     BerichtLbl.Visible = true;
                     bool sended = false;
                     this.Refresh();
                     
                     while (!sended)
                     {
-                        System.Threading.Thread.Sleep(2500);
+                        Thread.Sleep(2500);
 
                         if (htc.CanWePlay())
                         {
-                            BerichtLbl.Text = "Uw " + OrderController.SelectedCoffee.Name + " wordt gezet u kunt naar de belevingskamer lopen.";
+                            BerichtLbl.Text = "Uw " + _orderController.SelectedCoffee.Name + " wordt gezet u kunt naar de belevingskamer lopen.";
                             this.Refresh();
-                            Console.WriteLine("coffee sended");
+                            
                             sended = true;
-                            htc.PostCoffee(OrderController.SelectedLandscape.Name, OrderController.SelectedCoffee.Name, 30);
+                            htc.PostCoffee(_orderController.SelectedLandscape.Name, _orderController.SelectedCoffee.Name, 30);
                         }
                     }
                 }
 
-                System.Threading.Thread.Sleep(3000);
+                Thread.Sleep(3000);
 
                 BerichtLbl.Visible = false;
                 ResetScreen();
                 
-            }            
+            }*/            
         }
     }
 }
