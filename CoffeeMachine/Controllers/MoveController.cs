@@ -7,32 +7,7 @@ namespace CoffeeMachine.Controllers
 {
     class MoveController
     {
-        private Coordinates[] PictureCoordinatesList = new Coordinates[6];
-
-        public MoveController(int xStart, int yStart)
-        {
-            SetCoordinates(xStart, yStart);
-        }
         
-        public void SetCoordinates(int x, int y) {
-            for (int i = 0; i < PictureCoordinatesList.Length; i++) {
-                PictureCoordinatesList[i] = new Coordinates();
-            }
-
-            PictureCoordinatesList[0].X = x + 200;
-            PictureCoordinatesList[0].Y = y - 200;
-            PictureCoordinatesList[1].X = x - 350;
-            PictureCoordinatesList[1].Y = y - 200;
-            PictureCoordinatesList[2].X = x - 400;
-            PictureCoordinatesList[2].Y = y - 25;
-            PictureCoordinatesList[3].X = x + 250;
-            PictureCoordinatesList[3].Y = y - 25;
-            PictureCoordinatesList[4].X = x - 350;
-            PictureCoordinatesList[4].Y = y + 150;
-            PictureCoordinatesList[5].X = x + 200;
-            PictureCoordinatesList[5].Y = y + 150;
-        }
-
         public void HidePictures(PictureBox[] pictures)
         {
             foreach (PictureBox pictureBox in pictures)
@@ -62,7 +37,34 @@ namespace CoffeeMachine.Controllers
         }
 
         #region Picture movement, old code not used
+        /*
+        private Coordinates[] PictureCoordinatesList = new Coordinates[6];
 
+        public MoveController(int xStart, int yStart)
+        {
+            SetCoordinates(xStart, yStart);
+        }
+
+        public void SetCoordinates(int x, int y)
+        {
+            for (int i = 0; i < PictureCoordinatesList.Length; i++)
+            {
+                PictureCoordinatesList[i] = new Coordinates();
+            }
+
+            PictureCoordinatesList[0].X = x + 200;
+            PictureCoordinatesList[0].Y = y - 200;
+            PictureCoordinatesList[1].X = x - 350;
+            PictureCoordinatesList[1].Y = y - 200;
+            PictureCoordinatesList[2].X = x - 400;
+            PictureCoordinatesList[2].Y = y - 25;
+            PictureCoordinatesList[3].X = x + 250;
+            PictureCoordinatesList[3].Y = y - 25;
+            PictureCoordinatesList[4].X = x - 350;
+            PictureCoordinatesList[4].Y = y + 150;
+            PictureCoordinatesList[5].X = x + 200;
+            PictureCoordinatesList[5].Y = y + 150;
+        }
         public void MovePicturesOutOfCenter(PictureBox[] Pictures, int XMiddle, int YMiddle)
         {
             for (int i = 0; i < Pictures.Length; i++)
@@ -158,7 +160,7 @@ namespace CoffeeMachine.Controllers
 
             }
         }
-
+        */
         #endregion
     }
 }

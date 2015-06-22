@@ -20,8 +20,8 @@ namespace CoffeeMachine.Controllers
                 new Landscape { Name = "BamboForest", Image = Resources.LandscapesImageFolder + "BamboForest.png" },
                 new Landscape { Name = "Hitachi", Image = Resources.LandscapesImageFolder + "Hitachi.png" },
                 new Landscape { Name = "ParisNights", Image = Resources.LandscapesImageFolder + "ParisNights.png" },
-                new Landscape { Name = "Bos", Image = Resources.DrinksImageFolder + "Coffee1.png" },
-                new Landscape { Name = "Strand", Image = Resources.DrinksImageFolder + "Coffee1.png" }
+                new Landscape { Name = "Italie", Image = Resources.LandscapesImageFolder + "Italie.png" },
+                new Landscape { Name = "Venetie", Image = Resources.LandscapesImageFolder + "Venetie.png" }
             };
 
             return landscapes;

@@ -138,53 +138,6 @@ namespace CoffeeMachine
             _centerPicture.BackgroundImage = null;
         }
 
-        private void FillLandscapes()
-        {
-            /*
-            Array.Clear(_pictures, 0, _pictures.Length);
-            InitializeVariables();
-
-            LandscapeList.Add(new Landscape { Name = "Alps", Image = ".\\Images\\Drink\\Alps.png" });
-            LandscapeList.Add(new Landscape { Name = "BamboForest", Image = ".\\Images\\Drink\\BamboForest.png" });
-            LandscapeList.Add(new Landscape { Name = "Hitachi", Image = ".\\Images\\Drink\\Hitachi.png" });
-            LandscapeList.Add(new Landscape { Name = "ParisNights", Image = ".\\Images\\Drink\\ParisNights.png" });
-            LandscapeList.Add(new Landscape { Name = "Bos", Image = ".\\Images\\Coffee\\Coffee1.png" });
-            LandscapeList.Add(new Landscape { Name = "Strand", Image = ".\\Images\\Coffee\\Coffee1.png" });
-
-            //set images
-            for (int i = 0; i < LandscapeList.Count; i++)
-            {
-                _pictures[i].BackgroundImage = Image.FromFile(LandscapeList[i].Image);
-                _pictures[i].Name = LandscapeList[i].Name;
-                _pictures[i].Left = XMiddle;
-                _pictures[i].Top = YMiddle;
-                _pictures[i].Click -= DrinkChoiceClick;
-                _pictures[i].Click += LandscapeChoiceClick;
-            }
-            */
-        }
-
-        private void FillCoffeeList()
-        {
-            /*
-            DrinkList.Add(new Drink { Name = "Cappucinno", Image = ".\\Images\\Drink\\Coffee1.png" });
-            DrinkList.Add(new Drink { Name = "Ristretto", Image = ".\\Images\\Drink\\Coffee1.png" });
-            DrinkList.Add(new Drink { Name = "Espresso", Image = ".\\Images\\Drink\\Espresso.png" });
-            DrinkList.Add(new Drink { Name = "Variatie Coffee", Image = ".\\Images\\Drink\\Coffee1.png" });
-            DrinkList.Add(new Drink { Name = "Doubble Espresso", Image = ".\\Images\\Drink\\Coffee1.png" });
-            DrinkList.Add(new Drink { Name = "Cafe Creme", Image = ".\\Images\\Drink\\Coffee1.png" });
-            DrinkList.Add(new Drink { Name = "Warme Chocomelk", Image = ".\\Images\\Drink\\Chocolade.png" });
-            DrinkList.Add(new Drink { Name = "Thee", Image = ".\\Images\\Drink\\Thee.png" });
-            
-            for (int i = 0; i < _pictures.Length; i++)
-            {
-                _pictures[i].BackgroundImage = Image.FromFile(DrinkList[i].Image);
-                _pictures[i].Name = DrinkList[i].Name;
-                _pictures[i].BackColor = Color.Transparent;
-            }
-             */
-        }
-
         private void FillUnderlyingPictures(PictureBox[] pictureBoxes, int id)
         {
             for (int i = 0; i < pictureBoxes.Length; i++)
@@ -223,14 +176,14 @@ namespace CoffeeMachine
             PictureBox tempPicture = (PictureBox)sender;
             _centerPicture.BackgroundImage = tempPicture.BackgroundImage;
             _orderController.SelectedCoffee = _drinkController.Drinks.Find(x => x.Name.Contains(tempPicture.Name));
-
+            _centerPicture.Visible = true;
             ButtonOk.Visible = true;
         }
 
         private void LandscapeChoiceClick(object sender, EventArgs e)
         {
             PictureBox tempPicture = (PictureBox)sender;
-            //BackgroundImage = TempPicture.BackgroundImage;
+            _centerPicture.BackgroundImage = tempPicture.BackgroundImage;
             _orderController.SelectedLandscape = _landscapeController.Landscapes.Find(x => x.Name.Contains(tempPicture.Name));
 
             ButtonOk.Visible = true;
@@ -256,30 +209,37 @@ namespace CoffeeMachine
                 picture.Visible = visiblity;
             }
         }
-
+        
         private void ResetScreen()
         {
             _orderController = new OrderController();
-            InitializeComponent();
-            InitializeSystem();
-            InitializeVariables();
-            InitializeOptions();
-            FillPictureboxes(_drinkController.Drinks);
+            //InitializeComponent();
+            //InitializeSystem();
             
-            BerichtLbl.Visible = false;
+            FillPictureboxes(_drinkController.Drinks);
+            MoveController moveController = new MoveController();
+            
+            FillUnderlyingPictures(_milkOptions, 0);
+            FillUnderlyingPictures(_strengthOptions, 0);
+            FillUnderlyingPictures(_sugarOptions, 0);
 
-            FormBorderStyle = FormBorderStyle.None;
-            WindowState = FormWindowState.Maximized;
-            BackColor = Color.FromArgb(36, 27, 18);
+            BerichtLbl.Visible = false;
+            ButtonBack.Visible = false;
+            ButtonOk.Visible = false;
             _centerPicture.Visible = false;
+            OptionsVisibility(true);
+            moveController.UnhidePictures(_pictures);
             _stepNumber = 1;
 
+            Refresh();
+            Refresh();
+            this.Refresh();
             Refresh();
         }
 
         private void GoToStepTwo()
         {
-            MoveController move = new MoveController(XMiddle, YMiddle);
+            MoveController move = new MoveController();
 
             OptionsVisibility(false);
             ButtonOk.Visible = false;
@@ -294,7 +254,7 @@ namespace CoffeeMachine
 
         private async void SendToServer()
         {
-            MoveController move = new MoveController(XMiddle, YMiddle);
+            MoveController move = new MoveController();
             HttpController httpController = new HttpController();
             var fooCaller = new Func<bool>(httpController.CanWePlay);
 
@@ -303,11 +263,15 @@ namespace CoffeeMachine
 
             asyncResult.AsyncWaitHandle.WaitOne();
             bool canPlay = fooCaller.EndInvoke(asyncResult);
+
+            DateTime elapsedTime = DateTime.Now;
             if (canPlay)
             {
                 BerichtLbl.Text = "Uw " + _orderController.SelectedCoffee.Name + " wordt gezet u kunt naar de belevingskamer lopen.";
                 BerichtLbl.Visible = true;
-                    
+                Refresh();
+                elapsedTime = DateTime.Now;
+                
                 httpController.PostCoffee(_orderController.SelectedLandscape.Name, _orderController.SelectedCoffee.Name, 30);
             }
             else
@@ -325,14 +289,17 @@ namespace CoffeeMachine
                     {
                         BerichtLbl.Text = "Uw " + _orderController.SelectedCoffee.Name + " wordt gezet u kunt naar de belevingskamer lopen.";
                         Refresh();
-                            
+                        elapsedTime = DateTime.Now;
                         sended = true;
                         httpController.PostCoffee(_orderController.SelectedLandscape.Name, _orderController.SelectedCoffee.Name, 30);
                     }
                 }
             }
 
-            Thread.Sleep(3000);
+            if (DateTime.Compare(DateTime.Now, elapsedTime.AddSeconds(3)) < 0)
+            {
+                Thread.Sleep(3000);
+            }
 
             BerichtLbl.Visible = false;
             ResetScreen();
@@ -341,7 +308,7 @@ namespace CoffeeMachine
 
         private void BackButtonClicked(object sender, EventArgs e)
         {
-            MoveController move = new MoveController(XMiddle, YMiddle);
+            MoveController move = new MoveController();
 
             OptionsVisibility(true);
             ButtonOk.Visible = true;
@@ -355,7 +322,7 @@ namespace CoffeeMachine
 
         private void OkeButtonClicked(object sender, EventArgs e)
         {
-            MoveController move = new MoveController(XMiddle, YMiddle);
+            MoveController move = new MoveController();
 
             switch (_stepNumber)
             {

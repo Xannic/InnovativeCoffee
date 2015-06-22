@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Configuration;
+using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 using CoffeeMachine.Models;
@@ -27,18 +28,23 @@ namespace CoffeeMachine.Controllers
         }
 
         public bool CanWePlay() {
-            // Get the latest coffee order and check if we played the scene.
-            Console.WriteLine("Start canplay" + System.DateTime.Now);
+            Order drink;
+
+            try
+            {
+                // Get the latest order and check if we played the scene.
+                String jsonResponse = new WebClient().DownloadString(Domain + "coffee/getlatestcoffee.php");
+                drink = JsonConvert.DeserializeObject<Order>(jsonResponse);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+
+                return false;
+            }
             
-            String jsonResponse = new WebClient().DownloadString(Domain + "coffee/getlatestcoffee.php");
-            Console.WriteLine("Middle canplay" + System.DateTime.Now);
-            
-            Order koffie = JsonConvert.DeserializeObject<Order>(jsonResponse);
-            Console.WriteLine("Stop canplay" + System.DateTime.Now);
-            
-            //mysql bool = 0 if false or 1 if true
-            return (koffie.Played == 1);
-           
+            // mysql returning 1 if true and 0 if false
+            return (drink.Played == 1);
         }
     }
 }
