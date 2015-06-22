@@ -1,28 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Configuration;
-using CoffeeAnalytics.Models;
+using System.Diagnostics;
+using System.Net;
+using System.Threading.Tasks;
+using CoffeeMachine.Models;
 using Newtonsoft.Json;
 
-namespace InovativeCoffeeGUI
+namespace CoffeeMachine.Controllers
 {
     class HttpController
     {
         private String Domain = "http://www.xannic.nl/api/";
 
-        public void PostCoffee(String Gebied, String KoffieNaam, int tijd)
+        public void PostCoffee(String landscape, String koffieNaam, int tijd)
         {
             using (var wb = new WebClient())
             {
                 String url = Domain + "coffee/insertcoffee.php";
                 var data = new NameValueCollection();
-                data["landscape"]= Gebied;
-                data["coffee"] = KoffieNaam;
+                data["landscape"]= landscape;
+                data["coffee"] = koffieNaam;
                 data["time_seconds"] = tijd.ToString();
                 data["deviceId"] = ConfigurationSettings.AppSettings["deviceId"];
                 var response = wb.UploadValues(url, "POST", data);
@@ -30,12 +28,23 @@ namespace InovativeCoffeeGUI
         }
 
         public bool CanWePlay() {
-            // Get the latest coffee order and check if we played the scene.
-            String JsonResponse = new WebClient().DownloadString(Domain + "coffee/getlatestcoffee.php");
-            Order Koffie = JsonConvert.DeserializeObject<Order>(JsonResponse);
-            //mysql bool = 0 if false or 1 if true
-            return (Koffie.Played == 1);
-           
+            Order drink;
+
+            try
+            {
+                // Get the latest order and check if we played the scene.
+                String jsonResponse = new WebClient().DownloadString(Domain + "coffee/getlatestcoffee.php");
+                drink = JsonConvert.DeserializeObject<Order>(jsonResponse);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+
+                return false;
+            }
+            
+            // mysql returning 1 if true and 0 if false
+            return (drink.Played == 1);
         }
     }
 }

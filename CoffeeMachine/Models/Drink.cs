@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace InovativeCoffeeGUI
+namespace CoffeeMachine.Models
 {
-    class Coffee
+    class Drink
     {
 
         public String Name { get; set; }

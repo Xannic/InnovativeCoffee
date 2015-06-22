@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InovativeCoffeeGUI
+namespace CoffeeMachine.Models
 {
     class Landscape
     {

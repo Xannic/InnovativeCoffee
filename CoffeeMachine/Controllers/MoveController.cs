@@ -1,72 +1,70 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using CoffeeMachine.Models;
 
-namespace InovativeCoffeeGUI
+namespace CoffeeMachine.Controllers
 {
-    class MoveControls
+    class MoveController
     {
-        private Coordinates[] PictureCoordinatesList = new Coordinates[6];
-
-        public MoveControls(int XStart, int YStart)
-        {
-            SetCoordinates(XStart, YStart);
-        }
         
-        public void SetCoordinates(int x, int y) {
-            for (int i = 0; i < PictureCoordinatesList.Length; i++) {
-                PictureCoordinatesList[i] = new Coordinates();
-            }
-
-            PictureCoordinatesList[0].x = x + 200;
-            PictureCoordinatesList[0].y = y - 200;
-            PictureCoordinatesList[1].x = x - 350;
-            PictureCoordinatesList[1].y = y - 200;
-            PictureCoordinatesList[2].x = x - 400;
-            PictureCoordinatesList[2].y = y - 25;
-            PictureCoordinatesList[3].x = x + 250;
-            PictureCoordinatesList[3].y = y - 25;
-            PictureCoordinatesList[4].x = x - 350;
-            PictureCoordinatesList[4].y = y + 150;
-            PictureCoordinatesList[5].x = x + 200;
-            PictureCoordinatesList[5].y = y + 150;
-        }
-
-        public void HidePictures(PictureBox[] Pictures)
+        public void HidePictures(PictureBox[] pictures)
         {
-            for (int i = 0; i < Pictures.Length; i++)
+            foreach (PictureBox pictureBox in pictures)
             {
-                while (Pictures[i].Height > 0)
+                while (pictureBox.Height > 0)
                 {
-                    Pictures[i].Height -= 5;
-                    Pictures[i].Width -= 5;
-                    Pictures[i].Refresh();
+                    pictureBox.Height -= 5;
+                    pictureBox.Width -= 5;
+                    pictureBox.Refresh();
                 }
             }
-
         }
 
-        public void UnhidePictures(PictureBox[] Pictures)
+        public void UnhidePictures(PictureBox[] pictures)
         {
-            for (int i = 0; i < PictureCoordinatesList.Length; i++)
+            for (int i = 0; i < pictures.Length ; i++)
             {                
-                while (Pictures[i].Height < 150)
+                while (pictures[i].Height < 150)
                 {
-                    Pictures[i].Height += 5;
-                    Pictures[i].Width += 5;
-                    Pictures[i].Left = PictureCoordinatesList[i].x;
-                    Pictures[i].Top = PictureCoordinatesList[i].y;
-                    Pictures[i].Refresh();
+                    pictures[i].Height += 5;
+                    pictures[i].Width += 5;
+                    //Pictures[i].Left = PictureCoordinatesList[i].X;
+                    //Pictures[i].Top = PictureCoordinatesList[i].Y;
+                    pictures[i].Refresh();
                 }                
             }
         }
 
         #region Picture movement, old code not used
+        /*
+        private Coordinates[] PictureCoordinatesList = new Coordinates[6];
 
+        public MoveController(int xStart, int yStart)
+        {
+            SetCoordinates(xStart, yStart);
+        }
+
+        public void SetCoordinates(int x, int y)
+        {
+            for (int i = 0; i < PictureCoordinatesList.Length; i++)
+            {
+                PictureCoordinatesList[i] = new Coordinates();
+            }
+
+            PictureCoordinatesList[0].X = x + 200;
+            PictureCoordinatesList[0].Y = y - 200;
+            PictureCoordinatesList[1].X = x - 350;
+            PictureCoordinatesList[1].Y = y - 200;
+            PictureCoordinatesList[2].X = x - 400;
+            PictureCoordinatesList[2].Y = y - 25;
+            PictureCoordinatesList[3].X = x + 250;
+            PictureCoordinatesList[3].Y = y - 25;
+            PictureCoordinatesList[4].X = x - 350;
+            PictureCoordinatesList[4].Y = y + 150;
+            PictureCoordinatesList[5].X = x + 200;
+            PictureCoordinatesList[5].Y = y + 150;
+        }
         public void MovePicturesOutOfCenter(PictureBox[] Pictures, int XMiddle, int YMiddle)
         {
             for (int i = 0; i < Pictures.Length; i++)
@@ -125,36 +123,36 @@ namespace InovativeCoffeeGUI
                 bool toRight;
                 bool toBottom;
 
-                while (!(x == PictureCoordinatesList[i].x && y == PictureCoordinatesList[i].y))
+                while (!(x == PictureCoordinatesList[i].X && y == PictureCoordinatesList[i].Y))
                 {
-                    toRight = (x < PictureCoordinatesList[i].x);
-                    toBottom = (y < PictureCoordinatesList[i].y);
+                    toRight = (x < PictureCoordinatesList[i].X);
+                    toBottom = (y < PictureCoordinatesList[i].Y);
                     int tempX;
                     int tempY;
 
-                    Console.WriteLine("x=" + x + "gebiedpla=" + PictureCoordinatesList[i].x);
-                    Console.WriteLine("y=" + y + "gebiedpla=" + PictureCoordinatesList[i].y);
+                    Console.WriteLine("x=" + x + "gebiedpla=" + PictureCoordinatesList[i].X);
+                    Console.WriteLine("y=" + y + "gebiedpla=" + PictureCoordinatesList[i].Y);
 
-                    tempX = (toRight) ? Convert.ToInt32(x + (PictureCoordinatesList[i].x / x)) : Convert.ToInt32(x - (x / PictureCoordinatesList[i].x));
-                    tempY = (toBottom) ? Convert.ToInt32(y + (PictureCoordinatesList[i].y / y)) : Convert.ToInt32(y - (y / PictureCoordinatesList[i].y));
+                    tempX = (toRight) ? Convert.ToInt32(x + (PictureCoordinatesList[i].X / x)) : Convert.ToInt32(x - (x / PictureCoordinatesList[i].X));
+                    tempY = (toBottom) ? Convert.ToInt32(y + (PictureCoordinatesList[i].Y / y)) : Convert.ToInt32(y - (y / PictureCoordinatesList[i].Y));
 
                     x = tempX;
-                    if (Pictures[i].Left != PictureCoordinatesList[i].x)
+                    if (Pictures[i].Left != PictureCoordinatesList[i].X)
                     {
                         Pictures[i].Left = tempX;
                     }
                     else
                     {
-                        x = PictureCoordinatesList[i].x;
+                        x = PictureCoordinatesList[i].X;
                     }
                     y = tempY;
-                    if (Pictures[i].Top != PictureCoordinatesList[i].y)
+                    if (Pictures[i].Top != PictureCoordinatesList[i].Y)
                     {
                         Pictures[i].Top = tempY;
                     }
                     else
                     {
-                        y = PictureCoordinatesList[i].y;
+                        y = PictureCoordinatesList[i].Y;
                     }
 
                     Pictures[i].Refresh();
@@ -162,7 +160,7 @@ namespace InovativeCoffeeGUI
 
             }
         }
-
+        */
         #endregion
     }
 }

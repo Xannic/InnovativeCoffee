@@ -1,11 +1,15 @@
-﻿namespace InovativeCoffeeGUI
+﻿using System;
+using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace CoffeeMachine
 {
     partial class OrderForm
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -41,10 +45,7 @@
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.pictureBox12 = new System.Windows.Forms.PictureBox();
-            this.LabelSugar = new System.Windows.Forms.Label();
-            this.LabelMilk = new System.Windows.Forms.Label();
-            this.LabelStrenght = new System.Windows.Forms.Label();
-            this.BackBtn = new System.Windows.Forms.Button();
+            this.ButtonBack = new System.Windows.Forms.Button();
             this.BerichtLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -68,7 +69,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(150, 150);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.CoffeeChoice);
             // 
             // pictureBox2
             // 
@@ -78,7 +78,6 @@
             this.pictureBox2.Size = new System.Drawing.Size(150, 150);
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.CoffeeChoice);
             // 
             // pictureBox3
             // 
@@ -88,7 +87,6 @@
             this.pictureBox3.Size = new System.Drawing.Size(150, 150);
             this.pictureBox3.TabIndex = 2;
             this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.CoffeeChoice);
             // 
             // pictureBox4
             // 
@@ -98,7 +96,6 @@
             this.pictureBox4.Size = new System.Drawing.Size(150, 150);
             this.pictureBox4.TabIndex = 3;
             this.pictureBox4.TabStop = false;
-            this.pictureBox4.Click += new System.EventHandler(this.CoffeeChoice);
             // 
             // pictureBox5
             // 
@@ -108,7 +105,6 @@
             this.pictureBox5.Size = new System.Drawing.Size(150, 150);
             this.pictureBox5.TabIndex = 4;
             this.pictureBox5.TabStop = false;
-            this.pictureBox5.Click += new System.EventHandler(this.CoffeeChoice);
             // 
             // pictureBox6
             // 
@@ -118,7 +114,6 @@
             this.pictureBox6.Size = new System.Drawing.Size(150, 150);
             this.pictureBox6.TabIndex = 5;
             this.pictureBox6.TabStop = false;
-            this.pictureBox6.Click += new System.EventHandler(this.CoffeeChoice);
             // 
             // pictureBox7
             // 
@@ -128,7 +123,6 @@
             this.pictureBox7.Size = new System.Drawing.Size(150, 150);
             this.pictureBox7.TabIndex = 6;
             this.pictureBox7.TabStop = false;
-            this.pictureBox7.Click += new System.EventHandler(this.CoffeeChoice);
             // 
             // pictureBox8
             // 
@@ -138,7 +132,6 @@
             this.pictureBox8.Size = new System.Drawing.Size(150, 150);
             this.pictureBox8.TabIndex = 7;
             this.pictureBox8.TabStop = false;
-            this.pictureBox8.Click += new System.EventHandler(this.CoffeeChoice);
             // 
             // pictureBox9
             // 
@@ -186,48 +179,16 @@
             this.pictureBox12.TabIndex = 12;
             this.pictureBox12.TabStop = false;
             // 
-            // LabelSugar
+            // ButtonBack
             // 
-            this.LabelSugar.AutoSize = true;
-            this.LabelSugar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelSugar.ForeColor = System.Drawing.Color.White;
-            this.LabelSugar.Location = new System.Drawing.Point(533, 200);
-            this.LabelSugar.Name = "LabelSugar";
-            this.LabelSugar.Size = new System.Drawing.Size(59, 13);
-            this.LabelSugar.TabIndex = 14;
-            this.LabelSugar.Text = "Sugar : 0";
-            // 
-            // LabelMilk
-            // 
-            this.LabelMilk.AutoSize = true;
-            this.LabelMilk.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelMilk.ForeColor = System.Drawing.Color.White;
-            this.LabelMilk.Location = new System.Drawing.Point(533, 217);
-            this.LabelMilk.Name = "LabelMilk";
-            this.LabelMilk.Size = new System.Drawing.Size(49, 13);
-            this.LabelMilk.TabIndex = 15;
-            this.LabelMilk.Text = "Milk : 0";
-            // 
-            // LabelStrenght
-            // 
-            this.LabelStrenght.AutoSize = true;
-            this.LabelStrenght.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelStrenght.ForeColor = System.Drawing.Color.White;
-            this.LabelStrenght.Location = new System.Drawing.Point(533, 234);
-            this.LabelStrenght.Name = "LabelStrenght";
-            this.LabelStrenght.Size = new System.Drawing.Size(74, 13);
-            this.LabelStrenght.TabIndex = 16;
-            this.LabelStrenght.Text = "Strenght : 1";
-            // 
-            // BackBtn
-            // 
-            this.BackBtn.Location = new System.Drawing.Point(533, 528);
-            this.BackBtn.Name = "BackBtn";
-            this.BackBtn.Size = new System.Drawing.Size(75, 23);
-            this.BackBtn.TabIndex = 17;
-            this.BackBtn.Text = "Terug";
-            this.BackBtn.UseVisualStyleBackColor = true;
-            this.BackBtn.Visible = false;
+            this.ButtonBack.Location = new System.Drawing.Point(533, 528);
+            this.ButtonBack.Name = "ButtonBack";
+            this.ButtonBack.Size = new System.Drawing.Size(75, 23);
+            this.ButtonBack.TabIndex = 17;
+            this.ButtonBack.Text = "Terug";
+            this.ButtonBack.UseVisualStyleBackColor = true;
+            this.ButtonBack.Visible = false;
+            this.ButtonBack.Click += new EventHandler(this.BackButtonClicked);
             // 
             // BerichtLbl
             // 
@@ -249,10 +210,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1350, 729);
             this.Controls.Add(this.BerichtLbl);
-            this.Controls.Add(this.BackBtn);
-            this.Controls.Add(this.LabelStrenght);
-            this.Controls.Add(this.LabelMilk);
-            this.Controls.Add(this.LabelSugar);
+            this.Controls.Add(this.ButtonBack);
             this.Controls.Add(this.pictureBox12);
             this.Controls.Add(this.pictureBox11);
             this.Controls.Add(this.pictureBox10);
@@ -287,24 +245,21 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.PictureBox pictureBox7;
-        private System.Windows.Forms.PictureBox pictureBox8;
-        private System.Windows.Forms.PictureBox pictureBox9;
-        private System.Windows.Forms.Button ButtonOk;
-        private System.Windows.Forms.PictureBox pictureBox10;
-        private System.Windows.Forms.PictureBox pictureBox11;
-        private System.Windows.Forms.PictureBox pictureBox12;
-        private System.Windows.Forms.Label LabelSugar;
-        private System.Windows.Forms.Label LabelMilk;
-        private System.Windows.Forms.Label LabelStrenght;
-        private System.Windows.Forms.Button BackBtn;
-        private System.Windows.Forms.Label BerichtLbl;
+        private PictureBox pictureBox1;
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox3;
+        private PictureBox pictureBox4;
+        private PictureBox pictureBox5;
+        private PictureBox pictureBox6;
+        private PictureBox pictureBox7;
+        private PictureBox pictureBox8;
+        private PictureBox pictureBox9;
+        private Button ButtonOk;
+        private PictureBox pictureBox10;
+        private PictureBox pictureBox11;
+        private PictureBox pictureBox12;
+        private Button ButtonBack;
+        private Label BerichtLbl;
     }
 }
 
